@@ -1,15 +1,16 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
-part 'sign_in_event.freezed.dart';
+abstract class SignInEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
-@freezed
-class SignInEvent with _$SignInEvent {
-  const factory SignInEvent.submitted({
-    required String email,
-    required String password,
-  }) = _Submitted;
+class SignInSubmitted extends SignInEvent {
+  final String email;
+  final String password;
 
-  const factory SignInEvent.emailChanged(String email) = _EmailChanged;
-  const factory SignInEvent.passwordChanged(String password) = _PasswordChanged;
-  const factory SignInEvent.rememberMeToggled(bool value) = _RememberMeToggled;
+  SignInSubmitted({required this.email, required this.password});
+
+  @override
+  List<Object?> get props => [email, password];
 }

@@ -3,29 +3,22 @@ import 'sign_in_event.dart';
 import 'sign_in_state.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
-  SignInBloc() : super(const SignInState()) {
-    on<SignInEvent>((event, emit) {
-      event.map(
-        submitted: (e) {
-          // async ishni alohida chaqiramiz
-          _handleSubmitted(e, emit);
-        },
-      );
-    });
+  SignInBloc() : super(SignInInitial()) {
+    on<SignInSubmitted>(_onSignInSubmitted);
   }
 
-  Future<void> _handleSubmitted(_Submitted e, Emitter<SignInState> emit) async {
-    emit(state.copyWith(isLoading: true, errorMessage: null));
+  Future<void> _onSignInSubmitted(
+      SignInSubmitted event, Emitter<SignInState> emit) async {
+    emit(SignInLoading());
 
-    await Future.delayed(const Duration(seconds: 2)); // fake API
+    // Simulate a login process
+    await Future.delayed(const Duration(seconds: 1));
 
-    if (e.email == "test@gmail.com" && e.password == "123456") {
-      emit(state.copyWith(isLoading: false, isSuccess: true));
+    // Simple validation (replace with your real logic/API call)
+    if (event.email == "test@gmail.com" && event.password == "password123") {
+      emit(SignInSuccess());
     } else {
-      emit(state.copyWith(
-        isLoading: false,
-        errorMessage: "Invalid email or password",
-      ));
+      emit(SignInFailure("Email or password is incorrect"));
     }
   }
 }

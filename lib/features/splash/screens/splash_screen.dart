@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:grand_hotel/core/config/theme/app_colors.dart';
-import 'package:grand_hotel/features/splash/controllers/splash_controller.dart';
+import 'package:grand_hotel/bloc/auth/auth_bloc.dart';
+import 'package:grand_hotel/bloc/auth/auth_state.dart';
+import 'package:grand_hotel/core/routes/app_routers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,165 +18,234 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
-  late Animation<double> _slideAnimation;
   late Animation<double> _rotateAnimation;
 
   @override
   void initState() {
     super.initState();
     _setupAnimations();
-
-    // ❗️ vaqtinchalik: onboardingni qayta test qilish uchun
-    _resetOnboarding();
-
-    _handleNavigation();
+    _controller.forward();
+    _navigateToNextScreen();
   }
 
-  /// Vaqtinchalik: Onboardingni qayta ochilishi uchun flagni o‘chiradi
-  Future<void> _resetOnboarding() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('seenOnboarding');
-  }
-
-  /// Splash tugagach qaysi sahifaga o‘tishni aniqlash
-  Future<void> _handleNavigation() async {
-    await Future.delayed(const Duration(milliseconds: 3000));
-    if (!mounted) return;
-
-    final route = await SplashController.to.determineInitialRoute();
-    Get.offAllNamed(route);
-  }
-
-  /// Animatsiyalarni sozlash
   void _setupAnimations() {
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 2500),
+      duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
 
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
+        curve: const Interval(0.0, 0.5, curve: Curves.easeIn),
       ),
     );
 
-    _scaleAnimation = Tween<double>(begin: 0.4, end: 1.0).animate(
+    _scaleAnimation = Tween<double>(begin: 0.3, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 0.7, curve: Curves.easeOutCubic),
+        curve: const Interval(0.2, 0.7, curve: Curves.elasticOut),
       ),
     );
 
-    _slideAnimation = Tween<double>(begin: -30.0, end: 0.0).animate(
+    _rotateAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.2, 0.8, curve: Curves.easeOutCubic),
+        curve: const Interval(0.0, 0.6, curve: Curves.easeInOut),
       ),
     );
+  }
 
-    _rotateAnimation = Tween<double>(begin: 0.2, end: 0.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.0, 0.7, curve: Curves.easeOutCubic),
-      ),
-    );
+  Future<void> _navigateToNextScreen() async {
+    await Future.delayed(const Duration(milliseconds: 3000));
+    if (!mounted) return;
 
-    Future.delayed(const Duration(milliseconds: 100), () {
-      _controller.forward();
-    });
+    final route = await _determineInitialRoute();
+    if (!mounted) return;
+
+    Get.offAllNamed(route);
+  }
+
+  Future<String> _determineInitialRoute() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final isFirstTime = prefs.getBool('isFirstTime') ?? true;
+
+      if (isFirstTime) return AppRouters.onboarding;
+
+      final authState = context.read<AuthBloc>().state;
+      if (authState is AuthAuthenticated) return AppRouters.home;
+
+      return AppRouters.signIn;
+    } catch (e) {
+      debugPrint('Route determination error: $e');
+      return AppRouters.signIn;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: Center(
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) => _buildAnimatedContent(isDark),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAnimatedContent(bool isDark) {
-    return Transform.translate(
-      offset: Offset(0, _slideAnimation.value),
-      child: Transform.rotate(
-        angle: _rotateAnimation.value,
-        child: Transform.scale(
-          scale: _scaleAnimation.value,
-          child: FadeTransition(
-            opacity: _fadeAnimation,
-            child: _buildSplashContent(isDark),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF4A6FD4),
+              Color(0xFF3B5BA5),
+              Color(0xFF2D4785),
+            ],
           ),
         ),
-      ),
-    );
-  }
+        child: SafeArea(
+          child: AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              return Stack(
+                children: [
+                  // Background pattern
+                  Positioned.fill(
+                    child: Opacity(
+                      opacity: 0.1,
+                      child: Image.asset(
+                        'assets/images/splash_screen.png',
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const SizedBox.shrink();
+                        },
+                      ),
+                    ),
+                  ),
 
-  Widget _buildSplashContent(bool isDark) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildLogoContainer(),
-        const SizedBox(height: 24),
-        _buildAppTitle(),
-        const SizedBox(height: 8),
-        _buildAppSubtitle(),
-      ],
-    );
-  }
+                  // Main content
+                  Center(
+                    child: FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Logo with animations
+                          ScaleTransition(
+                            scale: _scaleAnimation,
+                            child: RotationTransition(
+                              turns: _rotateAnimation,
+                              child: Container(
+                                width: 150,
+                                height: 150,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.white.withOpacity(0.3),
+                                      blurRadius: 30,
+                                      spreadRadius: 5,
+                                    ),
+                                  ],
+                                ),
+                                child: ClipOval(
+                                  child: Image.asset(
+                                    'assets/images/splash_screen.png',
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Container(
+                                        color: Colors.white.withOpacity(0.2),
+                                        child: const Icon(
+                                          Icons.hotel,
+                                          size: 80,
+                                          color: Colors.white,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
 
-  Widget _buildLogoContainer() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          colors: [
-            AppColors.primary,
-            AppColors.primary.withValues(alpha: 0.8),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.3),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+                          const SizedBox(height: 40),
+
+                          // App name
+                          const Text(
+                            'Grand Hotel',
+                            style: TextStyle(
+                              fontSize: 36,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              letterSpacing: 2,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black26,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(height: 16),
+
+                          // Subtitle
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            child: Text(
+                              'Find Your Perfect Stay,\nAnytime, Anywhere',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white.withOpacity(0.9),
+                                letterSpacing: 0.5,
+                                height: 1.5,
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 60),
+
+                          // Loading indicator
+                          SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 3,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.white.withOpacity(0.7),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // Version at bottom
+                  Positioned(
+                    bottom: 30,
+                    left: 0,
+                    right: 0,
+                    child: FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: Text(
+                        'Version 1.0.0',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.white.withOpacity(0.6),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
-        ],
-      ),
-      child: Image.asset(
-        'assets/images/splash_image.png',
-        width: 90,
-        height: 123,
-      ),
-    );
-  }
-
-  Widget _buildAppTitle() {
-    return const Text(
-      'Grand Hotel',
-      style: TextStyle(
-        fontSize: 32,
-        fontWeight: FontWeight.w700,
-        color: Colors.white,
-      ),
-    );
-  }
-
-  Widget _buildAppSubtitle() {
-    return Text(
-      'Find Your Perfect Stay, Anytime, Anywhere',
-      style: TextStyle(
-        fontSize: 14,
-        color: Colors.white.withValues(alpha: 0.7),
-        letterSpacing: 0.5,
+        ),
       ),
     );
   }

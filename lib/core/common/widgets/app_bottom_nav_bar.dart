@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grand_hotel/core/config/theme/app_colors.dart';
 
 class AppBottomNavBar extends StatelessWidget {
@@ -20,21 +21,23 @@ class AppBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       decoration: BoxDecoration(
-          color: backgroundColor ?? (isDark ? Color(0xFF1E1E1E) : Colors.white),
-          boxShadow: [
-            BoxShadow(
-              color: isDark
-                  ? Colors.black.withValues(alpha: 0.3)
-                  : Colors.black.withValues(alpha: 0.1),
-              blurRadius: 10,
-              offset: Offset(0, -5),
-            ),
-          ]),
+        color: backgroundColor ?? (isDark ? const Color(0xFF1E1E1E) : Colors.white),
+        boxShadow: [
+          BoxShadow(
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.1),
+            blurRadius: 10,
+            offset: const Offset(0, -5),
+          ),
+        ],
+      ),
       child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           child: BottomNavigationBar(
             currentIndex: currentIndex,
             onTap: onTab,
@@ -42,21 +45,21 @@ class AppBottomNavBar extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             selectedItemColor: selectItemColor ?? AppColors.primary,
-            unselectedItemColor: unselectedItemColor ??
-                (isDark ? Colors.grey : AppColors.textLight),
-            selectedLabelStyle: TextStyle(
+            unselectedItemColor:
+            unselectedItemColor ?? (isDark ? Colors.grey : AppColors.textLight),
+            selectedLabelStyle: const TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 12,
             ),
-            unselectedLabelStyle: TextStyle(
+            unselectedLabelStyle: const TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 12,
             ),
             items: [
-              _buildNavItem(Icons.home_rounded, 'Home', 0),
-              _buildNavItem(Icons.category_rounded, 'Categories', 1),
-              _buildNavItem(Icons.shopping_cart, 'Cart', 2),
-              _buildNavItem(Icons.person, 'Profile', 3),
+              _buildNavItem('assets/icons/home.svg', 'assets/icons/home_filled.svg', 'Home', 0),
+              _buildNavItem('assets/icons/document.svg', 'assets/icons/document_filled.svg', 'Categories', 1),
+              _buildNavItem('assets/icons/chat.svg', 'assets/icons/chat_filled.svg', 'Cart', 2),
+              _buildNavItem('assets/icons/user.svg', 'assets/icons/user_filled.svg', 'Profile', 3),
             ],
           ),
         ),
@@ -65,27 +68,41 @@ class AppBottomNavBar extends StatelessWidget {
   }
 
   BottomNavigationBarItem _buildNavItem(
-      IconData icon,
+      String iconPath,
+      String activeIconPath,
       String label,
       int index,
       ) {
-    return BottomNavigationBarItem(icon: Builder(
-      builder: (context) {
-        final isDark = Theme.of(context).brightness == Brightness.dark;
-        return Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: currentIndex == index
-                ? (isDark
-                ? AppColors.primary.withValues(alpha: 0.2)
-                : AppColors.primary.withValues(alpha: 0.1))
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(icon),
-        );
-      },
-    ),
+    return BottomNavigationBarItem(
+      icon: Builder(
+        builder: (context) {
+          final isSelected = currentIndex == index;
+          final isDark = Theme.of(context).brightness == Brightness.dark;
+
+          return Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? (isDark
+                  ? AppColors.primary.withValues(alpha: 0.2)
+                  : AppColors.primary.withValues(alpha: 0.1))
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: SvgPicture.asset(
+              isSelected ? activeIconPath : iconPath,
+              colorFilter: ColorFilter.mode(
+                isSelected
+                    ? (AppColors.primary)
+                    : (isDark ? Colors.grey : AppColors.textLight),
+                BlendMode.srcIn,
+              ),
+              width: 22,
+              height: 22,
+            ),
+          );
+        },
+      ),
       label: label,
     );
   }

@@ -1,8 +1,10 @@
+// features/auth/views/screens/forgot_password_screen.dart
 import 'package:flutter/material.dart';
-import 'package:grand_hotel/core/common/utils/validation_untils.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grand_hotel/bloc/auth/auth_bloc.dart';
+import 'package:grand_hotel/bloc/auth/auth_event.dart';
+import 'package:grand_hotel/bloc/auth/auth_state.dart';
 import 'package:grand_hotel/core/common/widgets/custom_button.dart';
-import 'package:grand_hotel/core/config/theme/app_colors.dart';
-import 'package:grand_hotel/features/auth/views/screens/otp_screen.dart';
 import 'package:grand_hotel/features/auth/views/widgets/custom_text_field.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -14,92 +16,72 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController emailController = TextEditingController();
-  String? emailError;
 
-  void validateInputs() {
-    setState(() {
-      emailError = ValidationUtils.validateEmail(emailController.text);
-    });
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
   }
-
-  bool get isValid => emailError == null;
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(24),
+      appBar: AppBar(
+        title: const Text('Forgot Password'),
+      ),
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is ForgotPasswordSent) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.green,
+              ),
+            );
+            Navigator.pop(context);
+          } else if (state is AuthError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 20),
-              IconButton(onPressed: () {
-                Navigator.pop(context);
-              }, icon: Icon(Icons.arrow_back)),
-              const SizedBox(height: 20),
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'Forgot Password',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                        color: isDark ? Colors.white : AppColors.textDark,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'Recover your account password',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color:
-                              isDark ? Color(0xFF434E58) : AppColors.textLight,
-                        ),
-                  ),
-                ),
-              ]),
-              const SizedBox(height: 32),
+              const Text(
+                'Enter your email address and we will send you a password reset link.',
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 24),
               CustomTextField(
                 label: 'Email',
                 hintText: 'Enter your email',
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
-                errorText: emailError,
-                onChanged: (value) {
-                  validateInputs();
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  if (!value.contains('@')) {
-                    return 'Please enter a valid email';
-                  }
-                  return null;
-                },
               ),
               const SizedBox(height: 24),
-              CustomButton(
-                text: 'Next',
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => OtpScreen(
-                        email: emailController.text,
-                      ),
-                    ),
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  final isLoading = state is AuthLoading;
+
+                  return CustomButton(
+                    text: 'Send Reset Link',
+                    isLoading: isLoading,
+                    onPressed: isLoading
+                        ? null
+                        : () {
+                      context.read<AuthBloc>().add(
+                        ForgotPassword(emailController.text.trim()),
+                      );
+                    },
                   );
                 },
-                isLoading: false,   // bu bosilganda loader qo‘yish uchun
-                isDisabled: emailController.text.isEmpty, // email bo‘sh bo‘lsa disable
               ),
-
             ],
           ),
         ),
