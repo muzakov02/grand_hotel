@@ -9,22 +9,26 @@ import 'package:grand_hotel/features/detail/widgets/recommendation/recommendatio
 import 'package:grand_hotel/features/detail/widgets/reviews/reviews_section.dart';
 import 'package:grand_hotel/models/full_hotel.dart';
 
-class HotelDetailScreen extends StatelessWidget {
-  final FullHotel hotel;
+import '../../models/property.dart';
+import '../booking/screens/request_booking_screen.dart';
 
-  const HotelDetailScreen({super.key, required this.hotel});
+class HotelDetailScreen extends StatelessWidget {
+
+  final Property property;
+
+  const HotelDetailScreen({super.key,  required this.property});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ReviewsBloc()..add(LoadReviews(hotel.id)),
+      create: (context) => ReviewsBloc()..add(LoadReviews(property.id)),
       child: Scaffold(
         body: Stack(
           children: [
             // Background Image (to'liq ekran)
             Positioned.fill(
               child: Image.network(
-                hotel.imageUrl,
+                property.imageUrl,
                 fit: BoxFit.cover,
               ),
             ),
@@ -121,7 +125,7 @@ class HotelDetailScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      hotel.name,
+                                      property.name,
                                       style: const TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.bold,
@@ -137,7 +141,7 @@ class HotelDetailScreen extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 4),
                                         Text(
-                                          hotel.location,
+                                          property.location,
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.grey.shade600,
@@ -150,7 +154,7 @@ class HotelDetailScreen extends StatelessWidget {
                                                 color: Colors.amber, size: 18),
                                             const SizedBox(width: 4),
                                             Text(
-                                              '${hotel.rating}',
+                                              '${property.rating}',
                                               style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w600,
@@ -195,7 +199,7 @@ class HotelDetailScreen extends StatelessWidget {
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           AllFacilitiesScreen(
-                                            hotelId: hotel.id,
+                                            hotelId: property.id,
                                           ),
                                     ),
                                   );
@@ -243,8 +247,8 @@ class HotelDetailScreen extends StatelessWidget {
                               ),
                               children: [
                                 TextSpan(
-                                  text: hotel.description.isNotEmpty
-                                      ? '${hotel.description}.....'
+                                  text: property.description.isNotEmpty
+                                      ? '${property.description}.....'
                                       : 'The ideal place for those looking for a luxurious and tranquil holiday experience with stunning sea views.....',
                                 ),
                                 TextSpan(
@@ -304,7 +308,7 @@ class HotelDetailScreen extends StatelessWidget {
                           const SizedBox(height: 12),
 
                           // ✅ REVIEWS SECTION (faqat 2 ta)
-                          ReviewsSection(hotelId: hotel.id),
+                          ReviewsSection(hotelId: property.id),
 
                           // Recommendation Section
                           const RecommendationSection(),
@@ -352,7 +356,7 @@ class HotelDetailScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '\$${hotel.pricePerNight.toInt()}.00',
+                            '\$${property.pricePerNight.toInt()}.00',
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -366,7 +370,19 @@ class HotelDetailScreen extends StatelessWidget {
                       // Booking button
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RequestBookingScreen(
+                                  hotelId: property.id,
+                                  hotelName: property.name,
+                                  hotelPrice: property.pricePerNight,
+                                  hotelImage: property.imageUrl,
+                                  property: property,),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF2F5FD7),
                             padding: const EdgeInsets.symmetric(vertical: 16),

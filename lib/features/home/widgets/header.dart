@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:grand_hotel/features/home/screens/notification_icon_screen.dart';
+import 'package:grand_hotel/features/search/search_screen.dart';
 
 class Header extends StatelessWidget {
   final String name;
@@ -76,9 +78,31 @@ class Header extends StatelessWidget {
           // 🔹 Search va Notification iconlar
           Row(
             children: [
-              _buildCircleIcon(Icons.search),
+              _buildCircleIcon(
+                icon: Icons.search,
+                onPressed: () {
+                  // Oddiy Navigator.push
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SearchScreen(),
+                    ),
+                  );
+                },
+              ),
               const SizedBox(width: 8),
-              _buildCircleIcon(Icons.notifications_none),
+              _buildCircleIcon(
+                icon: Icons.notifications_none,
+                onPressed: () {
+                  // Oddiy Navigator.push
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NotificationIconScreen(),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ],
@@ -86,7 +110,10 @@ class Header extends StatelessWidget {
     );
   }
 
-  Widget _buildCircleIcon(IconData icon) {
+  Widget _buildCircleIcon({
+    required IconData icon,
+    required VoidCallback onPressed,
+  }) {
     return Container(
       width: 36,
       height: 36,
@@ -103,7 +130,8 @@ class Header extends StatelessWidget {
       ),
       child: IconButton(
         icon: Icon(icon, color: Colors.black, size: 20),
-        onPressed: () {},
+        onPressed: onPressed,
+        padding: EdgeInsets.zero,
       ),
     );
   }

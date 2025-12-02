@@ -1,5 +1,8 @@
+// widgets/best_today/best_today_card.dart
 import 'package:flutter/material.dart';
-import 'package:grand_hotel/models/nearby_hotel.dart';
+import 'package:grand_hotel/models/best_today_hotel.dart';
+
+import '../../../../core/common/utils/navigation_helper.dart'; // ✅ Import
 
 class BestTodayCard extends StatelessWidget {
   final BestTodayHotel hotel;
@@ -14,7 +17,13 @@ class BestTodayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {}, // Placeholder for navigation
+      onTap: () {
+        // ✅ NavigationHelper ishlatish
+        NavigationHelper.navigateFromBestToday(
+          context: context,
+          hotel: hotel,
+        );
+      },
       child: Container(
         width: 296,
         margin: const EdgeInsets.only(right: 16),
@@ -60,18 +69,18 @@ class BestTodayCard extends StatelessWidget {
     );
   }
 
-    Widget _buildHotelDetails() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            hotel.name,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          const SizedBox(height: 3),
+  Widget _buildHotelDetails() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          hotel.name,
+          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        const SizedBox(height: 3),
         Row(
           children: [
             Icon(Icons.location_on, size: 13, color: Colors.grey[600]),

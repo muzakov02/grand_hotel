@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:grand_hotel/core/common/widgets/app_bottom_nav_bar.dart';
 import 'package:grand_hotel/features/booking/screens/booking_screen.dart';
 import 'package:grand_hotel/features/home/screens/home_screen.dart';
-import 'package:grand_hotel/features/message/screens/message_screen.dart';
 import 'package:grand_hotel/features/profile/screens/profile_screen.dart';
+
+
+import 'features/message/screens/messages_screen.dart';
 class MainScreen extends StatefulWidget {
   final int initialIndex;
 
@@ -29,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     const HomeScreen(),
     const BookingScreen(),
-    const MessageScreen(),
+    const MessagesScreen(),
     const ProfileScreen(),
   ];
   @override

@@ -1,12 +1,13 @@
 // Full Screen Map
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:grand_hotel/bloc/nearby_hotels/nearby_hotels_bloc.dart';
 
-import '../../../../bloc/nearby_hotels/nearby_hotels_bloc.dart';
 import '../../../../bloc/nearby_hotels/nearby_hotels_state.dart';
 
 class FullMapScreen extends StatelessWidget {

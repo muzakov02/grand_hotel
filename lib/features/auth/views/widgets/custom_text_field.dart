@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:grand_hotel/core/config/theme/app_colors.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -13,7 +14,7 @@ class CustomTextField extends StatefulWidget {
   final TextInputType? keyboardType;
   final VoidCallback? onEditingComplete;
   final Function(String)? onFieldSubmitted;
-
+  final List<TextInputFormatter>? inputFormatters;
   const CustomTextField({
     super.key,
     required this.label,
@@ -25,7 +26,7 @@ class CustomTextField extends StatefulWidget {
     this.onChanged,
     this.keyboardType,
     this.onEditingComplete,
-    this.onFieldSubmitted, this.validator,
+    this.onFieldSubmitted, this.validator, this.inputFormatters,
   });
 
   @override

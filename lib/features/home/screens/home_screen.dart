@@ -1,3 +1,4 @@
+// features/home/home_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grand_hotel/bloc/best_today/best_today_bloc.dart';
@@ -11,11 +12,9 @@ import 'package:grand_hotel/features/home/widgets/best_today/best_today_section.
 import 'package:grand_hotel/features/home/widgets/custom_location_bar.dart';
 import 'package:grand_hotel/features/home/widgets/header.dart';
 import 'package:grand_hotel/features/home/widgets/most_popular/most_popular.dart';
-import 'package:grand_hotel/features/home/widgets/recomended/recommended_section.dart';
-
 
 import '../../../bloc/nearby_hotels/nearby_hotels_bloc.dart' show NearbyHotelsBloc;
-// Import qilishingiz kerak bo'lgan boshqa widgetlar
+import '../widgets/recomended/recommended_section.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -41,26 +40,31 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // App Bar
-                  const Header(name: 'Matr Kohler', location: 'Tashkent, UZ',),
+                  const Header(name: 'Matr Kohler', location: 'Tashkent, UZ'),
 
                   const SizedBox(height: 20),
 
-                  // Search Bar
-                 const CustomLocationBar(),
+                  // Location Bar
+                  const CustomLocationBar(),
 
                   const SizedBox(height: 24),
-                 const MostPopular(),
+
+                  // Most Popular - ✅ property parametri olib tashlandi
+                  const MostPopular(),
 
                   const SizedBox(height: 24),
 
                   // Recommended Section
-                 const RecommendedSection(),
+                  const RecommendedSection(),
 
+                  const SizedBox(height: 24),
+
+                  // Map Section
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'Recomended for you',
+                      const Text(
+                        'Hotel Near You',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -68,12 +72,13 @@ class HomeScreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {},
-                        child: Text('Open Map'),
+                        child: const Text('Open Map',
+                          style: TextStyle(color: Color(0xFF2853AF),),),
                       ),
                     ],
                   ),
 
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
 
                   // Map placeholder
                   Container(
@@ -91,11 +96,6 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // const SizedBox(height: 24),
-                  //
-                  // // Hotel Near You Section
-                  // // const NearbyHotelsSection(),
-
                   const SizedBox(height: 24),
 
                   // Best Today Section
@@ -110,6 +110,4 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }

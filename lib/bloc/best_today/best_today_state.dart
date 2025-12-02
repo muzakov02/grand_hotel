@@ -1,4 +1,4 @@
-import 'package:grand_hotel/models/nearby_hotel.dart';
+import 'package:grand_hotel/models/best_today_hotel.dart';
 
 abstract class BestTodayState {}
 

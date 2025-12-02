@@ -4,7 +4,7 @@ import 'package:grand_hotel/core/common/widgets/custom_button.dart';
 import 'package:grand_hotel/core/config/theme/app_colors.dart';
 import 'package:grand_hotel/features/auth/views/widgets/custom_text_field.dart';
 import 'package:grand_hotel/features/auth/views/widgets/social_button.dart';
-import 'package:grand_hotel/features/home/screens/home_screen.dart';
+import 'package:grand_hotel/main_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -139,7 +139,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => HomeScreen(),
+                      builder: (context) => MainScreen(),
                     ),
                   );
                 },

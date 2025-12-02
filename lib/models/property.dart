@@ -5,11 +5,13 @@ class Property {
   final String location;
   final double pricePerNight;
   final double rating;
-  final String imageUrl;
+  final String  imageUrl;
   final PropertyType type;
   final bool isRecommended;
+  final String description;
 
-  Property({
+
+  Property(this.description, {
     required this.id,
     required this.name,
     required this.location,
@@ -25,5 +27,5 @@ enum PropertyType {
   all,
   villas,
   hotels,
-  apartments,
+  apartments, bestToday, hotel,
 }

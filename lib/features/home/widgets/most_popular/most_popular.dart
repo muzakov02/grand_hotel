@@ -1,16 +1,15 @@
-// widgets/most_popular.dart
+// widgets/most_popular/most_popular.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grand_hotel/features/detail/hotel_detail_screen.dart';
 import 'package:grand_hotel/widgets/animated_list_item.dart';
-
 import '../../../../bloc/most_popular/most_popular_bloc.dart';
 import '../../../../bloc/most_popular/most_popular_event.dart';
 import '../../../../bloc/most_popular/most_popular_state.dart';
+import '../../../../core/common/utils/navigation_helper.dart';
 import 'hotel_card.dart';
 
 class MostPopular extends StatelessWidget {
-  const MostPopular({super.key});
+  const MostPopular({super.key}); // ✅ property parametrini olib tashladik
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +29,7 @@ class MostPopular extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const AllHotelsScreen(),
-                //   ),
-                // );
+                // See All page
               },
               child: const Text(
                 'See All',
@@ -104,13 +98,10 @@ class MostPopular extends StatelessWidget {
                         child: HotelCard(
                           hotel: hotels[index],
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HotelDetailScreen(
-                                  hotel: hotels[index], // 👈 To'g'ridan-to'g'ri ishlatildi
-                                ),
-                              ),
+                            // ✅ NavigationHelper ishlatish
+                            NavigationHelper.navigateFromFullHotel(
+                              context: context,
+                              hotel: hotels[index],
                             );
                           },
                         ),

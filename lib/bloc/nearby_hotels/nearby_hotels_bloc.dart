@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../../models/nearby_hotel.dart';
 import 'nearby_hotels_event.dart';
 import 'nearby_hotels_state.dart';
-import 'package:grand_hotel/models/nearby_hotel.dart';
+import 'package:grand_hotel/models/best_today_hotel.dart';
 
 class NearbyHotelsBloc extends Bloc<NearbyHotelsEvent, NearbyHotelsState> {
   NearbyHotelsBloc() : super(NearbyHotelsInitial()) {

@@ -7,6 +7,9 @@ import 'package:grand_hotel/bloc/recommended/recommended_state.dart';
 import 'package:grand_hotel/features/home/widgets/recomended/property_card.dart';
 import 'package:grand_hotel/features/home/widgets/recomended/property_type_filter.dart';
 
+import '../../../../core/common/utils/navigation_helper.dart';
+
+
 
 class RecommendedSection extends StatelessWidget {
   const RecommendedSection({super.key});
@@ -98,7 +101,10 @@ class RecommendedSection extends StatelessWidget {
                   return PropertyCard(
                     property: properties[index],
                     onTap: () {
-                      // Navigator.push(...)
+                      NavigationHelper.navigateToHotelDetail(
+                        context: context,
+                        property: properties[index],
+                      );
                     },
                   );
                 },

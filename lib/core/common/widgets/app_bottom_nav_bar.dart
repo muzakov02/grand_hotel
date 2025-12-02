@@ -57,8 +57,8 @@ class AppBottomNavBar extends StatelessWidget {
             ),
             items: [
               _buildNavItem('assets/icons/home.svg', 'assets/icons/home_filled.svg', 'Home', 0),
-              _buildNavItem('assets/icons/document.svg', 'assets/icons/document_filled.svg', 'Categories', 1),
-              _buildNavItem('assets/icons/chat.svg', 'assets/icons/chat_filled.svg', 'Cart', 2),
+              _buildNavItem('assets/icons/document.svg', 'assets/icons/document_filled.svg', 'My Booking', 1),
+              _buildNavItem('assets/icons/chat.svg', 'assets/icons/chat_filled.svg', 'Message', 2),
               _buildNavItem('assets/icons/user.svg', 'assets/icons/user_filled.svg', 'Profile', 3),
             ],
           ),

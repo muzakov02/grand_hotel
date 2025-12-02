@@ -4,7 +4,7 @@ import 'package:grand_hotel/models/full_hotel.dart'; // 👈 O'zgardi
 class HotelData {
   static List<FullHotel> getMostPopularHotels() { // 👈 Hotel → FullHotel
     return [
-      FullHotel( // 👈 Hotel → FullHotel
+      FullHotel(
         id: '1',
         name: 'The Horizon Retreat',
         location: 'Los Angeles, CA',

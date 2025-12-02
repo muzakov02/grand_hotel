@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'best_today_event.dart';
 import 'best_today_state.dart';
-import 'package:grand_hotel/models/nearby_hotel.dart';
+import 'package:grand_hotel/models/best_today_hotel.dart';
 
 class BestTodayBloc extends Bloc<BestTodayEvent, BestTodayState> {
   BestTodayBloc() : super(BestTodayInitial()) {

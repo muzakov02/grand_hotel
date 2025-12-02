@@ -1,4 +1,6 @@
-import 'package:grand_hotel/models/nearby_hotel.dart';
+import 'package:grand_hotel/models/best_today_hotel.dart';
+
+import '../../models/nearby_hotel.dart';
 
 abstract class NearbyHotelsState {}
 
