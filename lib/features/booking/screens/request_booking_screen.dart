@@ -1,4 +1,4 @@
-// features/booking/screens/request_booking_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grand_hotel/features/booking/screens/checkout_screen.dart';
@@ -29,8 +29,8 @@ class _RequestBookingScreenState extends State<RequestBookingScreen> {
   DateTime? checkInDate;
   DateTime? checkOutDate;
   int guests = 1;
-  String roomType = 'Queen Room'; // ✅ Xona turi
-  String phoneNumber = '+998 90 123 45 67'; // ✅ Telefon raqam
+  String roomType = 'Queen Room';
+  String phoneNumber = '+998 90 123 45 67';
   double cleaningFee = 5;
   double serviceFee = 5;
 
@@ -39,7 +39,7 @@ class _RequestBookingScreenState extends State<RequestBookingScreen> {
     return DateFormat('MMM dd, yyyy').format(date);
   }
 
-  // ✅ Sanalarni formatlash (Aug 20 - Aug 25 formatida)
+
   String formatDateRange() {
     if (checkInDate == null || checkOutDate == null) {
       return 'Not selected';
@@ -459,7 +459,7 @@ class _RequestBookingScreenState extends State<RequestBookingScreen> {
           child:  ElevatedButton(
             onPressed: (checkInDate != null && checkOutDate != null)
                 ? () {
-              // ✅ Barcha ma'lumotlarni CheckoutScreen ga uzatish
+
               Navigator.push(
                 context,
                 MaterialPageRoute(

@@ -15,7 +15,6 @@ class BestTodaySection extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
@@ -58,9 +57,9 @@ class BestTodaySection extends StatelessWidget {
             else if (state is BestTodayLoaded)
               _buildHotelsList(context, state)
             else if (state is BestTodayError)
-                _buildError(state.message)
-              else
-                _buildLoadingList(),
+              _buildError(state.message)
+            else
+              _buildLoadingList(),
           ],
         );
       },
@@ -72,7 +71,6 @@ class BestTodaySection extends StatelessWidget {
       height: 245,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-
         itemCount: 3,
         itemBuilder: (context, index) {
           return Container(
@@ -114,5 +112,3 @@ class BestTodaySection extends StatelessWidget {
     );
   }
 }
-
-// Best Today Card

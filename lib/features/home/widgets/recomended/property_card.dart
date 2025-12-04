@@ -1,4 +1,3 @@
-// widgets/property_card.dart
 import 'package:flutter/material.dart';
 import 'package:grand_hotel/models/property.dart';
 
@@ -60,7 +59,6 @@ class PropertyCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Name and Rating
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

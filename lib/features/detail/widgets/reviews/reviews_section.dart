@@ -57,7 +57,6 @@ class ReviewsSection extends StatelessWidget {
 
         const SizedBox(height: 4),
 
-        // Reviews List - FAQAT 2 TA
         BlocBuilder<ReviewsBloc, ReviewsState>(
           builder: (context, state) {
             if (state is ReviewsLoading) {
@@ -106,13 +105,12 @@ class ReviewsSection extends StatelessWidget {
                 );
               }
 
-              // FAQAT 2 TA OLISH
               final limitedReviews = reviews.take(2).toList();
 
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.zero, // ✅ Default padding ni olib tashlash
+                padding: EdgeInsets.zero,
                 itemCount: limitedReviews.length,
                 itemBuilder: (context, index) {
                   return ReviewsCard(

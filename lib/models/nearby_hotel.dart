@@ -1,16 +1,15 @@
-
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class NearbyHotel {
   final String id;
   final String name;
   final String location;
-  final LatLng coordinates;
+  final Point coordinates;
   final String imageUrl;
   final double rating;
   final int reviewCount;
-  final double price;
-  final double distance; // km da
+  final int price;
+  final double distance;
 
   NearbyHotel({
     required this.id,
@@ -25,18 +24,18 @@ class NearbyHotel {
   });
 
   factory NearbyHotel.fromJson(Map<String, dynamic> json) {
+    final lat = (json['latitude'] ?? 0.0).toDouble();
+    final lng = (json['longitude'] ?? 0.0).toDouble();
+
     return NearbyHotel(
       id: json['id'] ?? '',
       name: json['name'] ?? '',
       location: json['location'] ?? '',
-      coordinates: LatLng(
-        json['latitude'] ?? 0.0,
-        json['longitude'] ?? 0.0,
-      ),
+      coordinates: Point(latitude: lat, longitude: lng),
       imageUrl: json['imageUrl'] ?? '',
       rating: (json['rating'] ?? 0.0).toDouble(),
       reviewCount: json['reviewCount'] ?? 0,
-      price: (json['price'] ?? 0.0).toDouble(),
+      price: (json['price'] ?? 0).toInt(),
       distance: (json['distance'] ?? 0.0).toDouble(),
     );
   }
@@ -54,5 +53,30 @@ class NearbyHotel {
       'price': price,
       'distance': distance,
     };
+  }
+
+  factory NearbyHotel.fromLatLng({
+    required String id,
+    required String name,
+    required String location,
+    required double latitude,
+    required double longitude,
+    required String imageUrl,
+    required double rating,
+    required int reviewCount,
+    required int price,
+    required double distance,
+  }) {
+    return NearbyHotel(
+      id: id,
+      name: name,
+      location: location,
+      coordinates: Point(latitude: latitude, longitude: longitude),
+      imageUrl: imageUrl,
+      rating: rating,
+      reviewCount: reviewCount,
+      price: price,
+      distance: distance,
+    );
   }
 }

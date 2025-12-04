@@ -15,7 +15,7 @@ class _NotificationScreenState extends State<NotificationIconScreen> {
   void _showFilterBottomSheet() {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // MUHIM!
+      isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
         return const FilterBottomSheet();
@@ -68,7 +68,6 @@ class _NotificationScreenState extends State<NotificationIconScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Today va Yesterday uchun ajratish
     final todayNotifications = notifications.sublist(0, 3); // 0, 1, 2
     final yesterdayNotifications = notifications.sublist(3); // 3, 4, 5
 

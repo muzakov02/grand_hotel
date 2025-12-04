@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../search/search_screen.dart';
 
-
 class CustomLocationBar extends StatelessWidget {
   const CustomLocationBar({super.key});
 
@@ -22,10 +21,6 @@ class CustomLocationBar extends StatelessWidget {
         decoration: BoxDecoration(
           color: Color(0xFFE8F2FF),
           borderRadius: BorderRadius.circular(16),
-
-          // border: Border.all(
-          //   color: Colors.grey.withValues(alpha: 0.2),
-          //   width: 1,
           // ),
           boxShadow: [
             BoxShadow(
@@ -44,11 +39,10 @@ class CustomLocationBar extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child:  SvgPicture.asset(
+              child: SvgPicture.asset(
                 'assets/icons/location2.svg',
-                ),
               ),
-
+            ),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
@@ -68,10 +62,10 @@ class CustomLocationBar extends StatelessWidget {
             ),
             SizedBox(width: 16),
             Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.black,
-                size: 24,
-              ),
+              Icons.arrow_forward_ios,
+              color: Colors.black,
+              size: 24,
+            ),
           ],
         ),
       ),

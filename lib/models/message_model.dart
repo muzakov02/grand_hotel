@@ -1,9 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
-// ❌ part directive ni o'chiring
-// part 'message_model.g.dart';
-
 class Message extends Equatable {
   final String id;
   final String name;
@@ -47,7 +44,6 @@ class Message extends Equatable {
     );
   }
 
-  // JSON serialization (Hive uchun)
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
       id: json['id'] as String,
@@ -76,18 +72,17 @@ class Message extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    name,
-    time,
-    imageUrl,
-    description,
-    unreadCount,
-    isOnline,
-    timestamp,
-  ];
+        id,
+        name,
+        time,
+        imageUrl,
+        description,
+        unreadCount,
+        isOnline,
+        timestamp,
+      ];
 }
 
-// ✅ Manual Hive Adapter
 class MessageAdapter extends TypeAdapter<Message> {
   @override
   final int typeId = 0;
@@ -139,7 +134,7 @@ class MessageAdapter extends TypeAdapter<Message> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is MessageAdapter &&
-              runtimeType == other.runtimeType &&
-              typeId == other.typeId;
+      other is MessageAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

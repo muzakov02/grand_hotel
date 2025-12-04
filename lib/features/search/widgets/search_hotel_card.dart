@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grand_hotel/models/full_hotel.dart';
 import 'package:grand_hotel/bloc/search_hotel/search_hotels_bloc.dart';
 import 'package:grand_hotel/bloc/search_hotel/search_hotels_event.dart';
+import 'package:grand_hotel/models/full_hotel.dart';
 
 class SearchHotelCard extends StatelessWidget {
   final FullHotel hotel;
@@ -54,7 +54,7 @@ class SearchHotelCard extends StatelessWidget {
                 child: CircularProgressIndicator(
                   value: loadingProgress.expectedTotalBytes != null
                       ? loadingProgress.cumulativeBytesLoaded /
-                      loadingProgress.expectedTotalBytes!
+                          loadingProgress.expectedTotalBytes!
                       : null,
                 ),
               ),
@@ -100,9 +100,9 @@ class SearchHotelCard extends StatelessWidget {
           right: 12,
           child: GestureDetector(
             onTap: () {
-              context.read<SearchHotelsBloc>().add(
-                  ToggleHotelFavorite(hotel.id)
-              );
+              context
+                  .read<SearchHotelsBloc>()
+                  .add(ToggleHotelFavorite(hotel.id));
             },
             child: Container(
               padding: EdgeInsets.all(8),
@@ -188,7 +188,8 @@ class SearchHotelCard extends StatelessWidget {
                 style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
               ),
               SizedBox(width: 16),
-              Icon(Icons.bathtub_outlined, size: 16, color: Colors.grey.shade600),
+              Icon(Icons.bathtub_outlined,
+                  size: 16, color: Colors.grey.shade600),
               SizedBox(width: 4),
               Text(
                 hotel.bath,

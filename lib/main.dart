@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' hide Transition;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:get/get.dart'; // ✅ TO'G'RI - barcha Get features
+import 'package:get/get.dart';
 import 'package:grand_hotel/repositories/card_repository.dart';
 import 'package:grand_hotel/repositories/local_message_repository.dart';
 
@@ -133,10 +133,11 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) =>
-          RecommendedBloc()..add(LoadRecommendedProperties()),
+              RecommendedBloc()..add(LoadRecommendedProperties()),
         ),
         BlocProvider(
           create: (context) => NearbyHotelsBloc()..add(LoadNearbyHotels()),
+          lazy: false,
         ),
         BlocProvider(
           create: (context) => BestTodayBloc()..add(LoadBestTodayHotels()),
@@ -145,19 +146,18 @@ class MyApp extends StatelessWidget {
           create: (context) => SearchHotelsBloc()..add(LoadSearchHotels()),
         ),
         BlocProvider(
-          create: (context) =>
-          PaymentMethodBloc()..add(LoadPaymentMethods()),
+          create: (context) => PaymentMethodBloc()..add(LoadPaymentMethods()),
         ),
         BlocProvider(
           create: (context) => BookingBloc()..add(LoadBookings()),
         ),
         BlocProvider(
           create: (context) =>
-          MessageBloc(repository: messageRepository)..add(LoadMessages()),
+              MessageBloc(repository: messageRepository)..add(LoadMessages()),
         ),
         BlocProvider(
           create: (context) =>
-          CardBloc(cardRepository: cardRepository)..add(LoadCards()),
+              CardBloc(cardRepository: cardRepository)..add(LoadCards()),
         ),
       ],
       child: BlocBuilder<AppStarterBloc, AppStarterState>(
@@ -202,10 +202,10 @@ class MyApp extends StatelessWidget {
                 theme: ThemeData(
                   primarySwatch: Colors.blue,
                   useMaterial3: true,
-                  brightness: appState is AppStarterInitialized &&
-                      appState.isDarkMode
-                      ? Brightness.dark
-                      : Brightness.light,
+                  brightness:
+                      appState is AppStarterInitialized && appState.isDarkMode
+                          ? Brightness.dark
+                          : Brightness.light,
                   scaffoldBackgroundColor: Colors.white,
                   appBarTheme: const AppBarTheme(
                     elevation: 0,
@@ -232,12 +232,12 @@ class MyApp extends StatelessWidget {
                     ),
                   ),
                 ),
-                themeMode: appState is AppStarterInitialized &&
-                    appState.isDarkMode
-                    ? ThemeMode.dark
-                    : ThemeMode.light,
+                themeMode:
+                    appState is AppStarterInitialized && appState.isDarkMode
+                        ? ThemeMode.dark
+                        : ThemeMode.light,
                 home: const MainScreen(),
-                defaultTransition: Transition.cupertino, // ✅ Endi ishlaydi
+                defaultTransition: Transition.cupertino,
                 transitionDuration: const Duration(milliseconds: 300),
               );
             },

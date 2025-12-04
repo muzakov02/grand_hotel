@@ -11,10 +11,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       SignInSubmitted event, Emitter<SignInState> emit) async {
     emit(SignInLoading());
 
-    // Simulate a login process
+
     await Future.delayed(const Duration(seconds: 1));
 
-    // Simple validation (replace with your real logic/API call)
+
     if (event.email == "test@gmail.com" && event.password == "password123") {
       emit(SignInSuccess());
     } else {

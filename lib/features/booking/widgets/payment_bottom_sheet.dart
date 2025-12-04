@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grand_hotel/features/booking/screens/booking_complete_screen.dart';
 import 'package:grand_hotel/features/booking/screens/new_card_screen.dart';
+
 import '../../../bloc/booking/booking_bloc.dart';
 import '../../../bloc/payment/payment_method_bloc.dart';
 import '../../../models/booking_model.dart';
@@ -54,13 +55,9 @@ class _PaymentMethodBottomSheetState extends State<PaymentBottomSheet> {
       setState(() {
         _isProcessing = true;
       });
-
-      // Payment method ni saqlash
       context
           .read<PaymentMethodBloc>()
           .add(SelectPaymentMethod(_tempSelectedPayment!));
-
-      // Booking yaratish
       final booking = widget.bookingData!.copyWith(
         paymentMethod: _tempSelectedPayment!.name,
       );
@@ -69,14 +66,10 @@ class _PaymentMethodBottomSheetState extends State<PaymentBottomSheet> {
 
       widget.onPaymentMethodSelected(_tempSelectedPayment!);
 
-      // Biroz kutish (animation uchun)
       await Future.delayed(Duration(milliseconds: 300));
 
       if (mounted) {
-        // Bottom sheet ni yopish
         Navigator.pop(context);
-
-        // Booking Complete Screen ga o'tish
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -196,9 +189,9 @@ class _PaymentMethodBottomSheetState extends State<PaymentBottomSheet> {
                           ),
                           child: method.iconPath != null
                               ? SvgPicture.asset(
-                            method.iconPath!,
-                            fit: BoxFit.contain,
-                          )
+                                  method.iconPath!,
+                                  fit: BoxFit.contain,
+                                )
                               : Icon(Icons.payment, color: Color(0xFF2853AF)),
                         ),
                         title: Text(
@@ -211,17 +204,17 @@ class _PaymentMethodBottomSheetState extends State<PaymentBottomSheet> {
                         ),
                         subtitle: method.cardNumber != null
                             ? Text(
-                          method.cardNumber!,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[600],
-                          ),
-                        )
+                                method.cardNumber!,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey[600],
+                                ),
+                              )
                             : null,
                         trailing: isSelected
                             ? Icon(Icons.check_box, color: Color(0xFF2853AF))
                             : Icon(Icons.check_box_outline_blank,
-                            color: Colors.grey),
+                                color: Colors.grey),
                         onTap: () {
                           setState(() {
                             _tempSelectedPayment = method;
@@ -253,23 +246,23 @@ class _PaymentMethodBottomSheetState extends State<PaymentBottomSheet> {
                       ),
                       child: _isProcessing
                           ? SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          valueColor:
-                          AlwaysStoppedAnimation<Color>(Colors.white),
-                        ),
-                      )
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white),
+                              ),
+                            )
                           : Text(
-                        'Confirm and Pay',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: _tempSelectedPayment != null
-                              ? Colors.white
-                              : Colors.grey.shade600,
-                        ),
-                      ),
+                              'Confirm and Pay',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: _tempSelectedPayment != null
+                                    ? Colors.white
+                                    : Colors.grey.shade600,
+                              ),
+                            ),
                     ),
                   ),
                 ),

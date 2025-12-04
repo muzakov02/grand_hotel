@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:grand_hotel/models/property.dart';
 import 'package:grand_hotel/bloc/recommended/recommended_bloc.dart';
 import 'package:grand_hotel/bloc/recommended/recommended_event.dart';
 import 'package:grand_hotel/bloc/recommended/recommended_state.dart';
+import 'package:grand_hotel/models/property.dart';
 
 class PropertyTypeFilter extends StatelessWidget {
   const PropertyTypeFilter({super.key});
 
-  // SVG icon yo'llari
   static const String _iconsPath = 'assets/icons';
 
   @override
@@ -67,12 +66,12 @@ class PropertyTypeFilter extends StatelessWidget {
   }
 
   Widget _buildFilterChip(
-      BuildContext context, {
-        required String label,
-        required String? iconPath, // Nullable
-        required PropertyType type,
-        required bool isSelected,
-      }) {
+    BuildContext context, {
+    required String label,
+    required String? iconPath,
+    required PropertyType type,
+    required bool isSelected,
+  }) {
     return GestureDetector(
       onTap: () {
         context.read<RecommendedBloc>().add(FilterPropertiesByType(type));
@@ -85,18 +84,17 @@ class PropertyTypeFilter extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: isSelected
               ? [
-            BoxShadow(
-              color: Colors.blue.withOpacity(0.3),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            )
-          ]
+                  BoxShadow(
+                    color: Colors.blue.withOpacity(0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  )
+                ]
               : null,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // SVG Icon - faqat iconPath mavjud bo'lsa
             if (iconPath != null) ...[
               SvgPicture.asset(
                 iconPath,
@@ -104,11 +102,10 @@ class PropertyTypeFilter extends StatelessWidget {
                 height: 28,
                 colorFilter: isSelected
                     ? const ColorFilter.mode(Colors.white, BlendMode.srcIn)
-                    : null, // 👈 null bo‘lsa, SVG asl rangda chiqadi
+                    : null,
               ),
               const SizedBox(width: 8),
             ],
-
 
             // Text
             Text(

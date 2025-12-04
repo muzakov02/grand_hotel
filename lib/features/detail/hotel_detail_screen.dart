@@ -4,59 +4,65 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grand_hotel/bloc/reviews/reviews_bloc.dart';
 import 'package:grand_hotel/bloc/reviews/reviews_event.dart';
+import 'package:grand_hotel/features/detail/detail_full_map_screen.dart';
 import 'package:grand_hotel/features/detail/widgets/facilities/all_facilities.dart';
 import 'package:grand_hotel/features/detail/widgets/recommendation/recommendation_section.dart';
 import 'package:grand_hotel/features/detail/widgets/reviews/reviews_section.dart';
-import 'package:grand_hotel/models/full_hotel.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import '../../models/property.dart';
 import '../booking/screens/request_booking_screen.dart';
 
-class HotelDetailScreen extends StatelessWidget {
-
+class HotelDetailScreen extends StatefulWidget {
   final Property property;
 
-  const HotelDetailScreen({super.key,  required this.property});
+  const HotelDetailScreen({super.key, required this.property});
+
+  @override
+  State<HotelDetailScreen> createState() => _HotelDetailScreenState();
+}
+
+class _HotelDetailScreenState extends State<HotelDetailScreen> {
+  late YandexMapController mapController;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ReviewsBloc()..add(LoadReviews(property.id)),
+      create: (context) => ReviewsBloc()..add(LoadReviews(widget.property.id)),
       child: Scaffold(
         body: Stack(
           children: [
-            // Background Image (to'liq ekran)
+            // Background Image
             Positioned.fill(
               child: Image.network(
-                property.imageUrl,
+                widget.property.imageUrl,
                 fit: BoxFit.cover,
               ),
             ),
 
-            // AppBar (shaffof)
+            // AppBar
             Positioned(
               top: 0,
               left: 0,
               right: 0,
               child: SafeArea(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Back button
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.grey.withValues(alpha: 0.5),
                           shape: BoxShape.circle,
                         ),
                         child: IconButton(
-                          icon: const Icon(Icons.arrow_back, color: Colors.white),
+                          icon:
+                              const Icon(Icons.arrow_back, color: Colors.white),
                           onPressed: () => Navigator.pop(context),
                         ),
                       ),
-
-                      // Title
                       const Text(
                         'Detail',
                         style: TextStyle(
@@ -64,15 +70,10 @@ class HotelDetailScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           shadows: [
-                            Shadow(
-                              color: Colors.black54,
-                              blurRadius: 4,
-                            ),
+                            Shadow(color: Colors.black54, blurRadius: 4),
                           ],
                         ),
                       ),
-
-                      // Menu button
                       IconButton(
                         icon: const Icon(Icons.more_vert, color: Colors.white),
                         onPressed: () {},
@@ -83,11 +84,10 @@ class HotelDetailScreen extends StatelessWidget {
               ),
             ),
 
-            // DraggableScrollableSheet (pastdan chiquvchi content)
             DraggableScrollableSheet(
-              initialChildSize: 0.65, // 65% ekran balandligi
-              minChildSize: 0.65, // Minimal 65%
-              maxChildSize: 0.9, // Maksimal 90%
+              initialChildSize: 0.65,
+              minChildSize: 0.65,
+              maxChildSize: 0.9,
               builder: (context, scrollController) {
                 return Container(
                   decoration: const BoxDecoration(
@@ -116,7 +116,6 @@ class HotelDetailScreen extends StatelessWidget {
                             ),
                           ),
 
-                          // Hotel name and rating
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -125,7 +124,7 @@ class HotelDetailScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      property.name,
+                                      widget.property.name,
                                       style: const TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.bold,
@@ -141,7 +140,7 @@ class HotelDetailScreen extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 4),
                                         Text(
-                                          property.location,
+                                          widget.property.location,
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.grey.shade600,
@@ -154,7 +153,7 @@ class HotelDetailScreen extends StatelessWidget {
                                                 color: Colors.amber, size: 18),
                                             const SizedBox(width: 4),
                                             Text(
-                                              '${property.rating}',
+                                              '${widget.property.rating}',
                                               style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w600,
@@ -167,7 +166,6 @@ class HotelDetailScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              // Favorite button
                               IconButton(
                                 onPressed: () {},
                                 icon: SvgPicture.asset(
@@ -181,7 +179,6 @@ class HotelDetailScreen extends StatelessWidget {
 
                           const SizedBox(height: 20),
 
-                          // Common Facilities
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -197,10 +194,9 @@ class HotelDetailScreen extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          AllFacilitiesScreen(
-                                            hotelId: property.id,
-                                          ),
+                                      builder: (context) => AllFacilitiesScreen(
+                                        hotelId: widget.property.id,
+                                      ),
                                     ),
                                   );
                                 },
@@ -220,10 +216,8 @@ class HotelDetailScreen extends StatelessWidget {
                             children: [
                               _buildFacilityIcon('ice', 'Ac'),
                               _buildFacilityIcon('restaurant', 'Restaurant'),
-                              _buildFacilityIcon(
-                                  'swimming', 'Swimming\nPool'),
-                              _buildFacilityIcon(
-                                  '24', '24-Hours\nFront Desk'),
+                              _buildFacilityIcon('swimming', 'Swimming\nPool'),
+                              _buildFacilityIcon('24', '24-Hours\nFront Desk'),
                             ],
                           ),
 
@@ -247,8 +241,8 @@ class HotelDetailScreen extends StatelessWidget {
                               ),
                               children: [
                                 TextSpan(
-                                  text: property.description.isNotEmpty
-                                      ? '${property.description}.....'
+                                  text: widget.property.description.isNotEmpty
+                                      ? '${widget.property.description}.....'
                                       : 'The ideal place for those looking for a luxurious and tranquil holiday experience with stunning sea views.....',
                                 ),
                                 TextSpan(
@@ -258,9 +252,7 @@ class HotelDetailScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                   ),
                                   recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      // Read More bosilganda
-                                    },
+                                    ..onTap = () {},
                                 ),
                               ],
                             ),
@@ -281,7 +273,14 @@ class HotelDetailScreen extends StatelessWidget {
                                 ),
                               ),
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetailFullMapScreen(
+                                                  property: widget.property)));
+                                },
                                 child: const Text('Open Map'),
                               ),
                             ],
@@ -289,31 +288,60 @@ class HotelDetailScreen extends StatelessWidget {
 
                           const SizedBox(height: 12),
 
-                          // Map placeholder
+                          // ✅ YANDEX MAP
                           Container(
-                            height: 150,
+                            height: 200,
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
                               borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey.shade300),
                             ),
-                            child: Center(
-                              child: Icon(
-                                Icons.map,
-                                size: 50,
-                                color: Colors.grey.shade400,
-                              ),
+                            clipBehavior: Clip.hardEdge,
+                            child: YandexMap(
+                              onMapCreated: (controller) async {
+                                mapController = controller;
+
+                                await mapController.moveCamera(
+                                  CameraUpdate.newCameraPosition(
+                                    CameraPosition(
+                                      target: Point(
+                                        latitude: widget.property.latitude,
+                                        longitude: widget.property.longitude,
+                                      ),
+                                      zoom: 15,
+                                    ),
+                                  ),
+                                );
+                              },
+                              mapObjects: [
+                                PlacemarkMapObject(
+                                  mapId: MapObjectId('hotel_location'),
+                                  point: Point(
+                                    latitude: widget.property.latitude,
+                                    longitude: widget.property.longitude,
+                                  ),
+                                  opacity: 1,
+                                  icon: PlacemarkIcon.single(
+                                    PlacemarkIconStyle(
+                                      image: BitmapDescriptor.fromAssetImage(
+                                        'assets/icons/location_marker.png',
+                                      ),
+                                      scale: 0.15,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
 
                           const SizedBox(height: 12),
 
-                          // ✅ REVIEWS SECTION (faqat 2 ta)
-                          ReviewsSection(hotelId: property.id),
+                          // Reviews Section
+                          ReviewsSection(hotelId: widget.property.id),
 
                           // Recommendation Section
                           const RecommendationSection(),
 
-                          const SizedBox(height: 100), // Space for bottom button
+                          const SizedBox(height: 100),
                         ],
                       ),
                     ),
@@ -322,7 +350,6 @@ class HotelDetailScreen extends StatelessWidget {
               },
             ),
 
-            // Bottom Price and Booking button
             Positioned(
               bottom: 0,
               left: 0,
@@ -343,7 +370,6 @@ class HotelDetailScreen extends StatelessWidget {
                   top: false,
                   child: Row(
                     children: [
-                      // Price
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -356,7 +382,7 @@ class HotelDetailScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '\$${property.pricePerNight.toInt()}.00',
+                            '\$${widget.property.pricePerNight.toInt()}.00',
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -366,8 +392,6 @@ class HotelDetailScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(width: 20),
-
-                      // Booking button
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
@@ -375,11 +399,12 @@ class HotelDetailScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => RequestBookingScreen(
-                                  hotelId: property.id,
-                                  hotelName: property.name,
-                                  hotelPrice: property.pricePerNight,
-                                  hotelImage: property.imageUrl,
-                                  property: property,),
+                                  hotelId: widget.property.id,
+                                  hotelName: widget.property.name,
+                                  hotelPrice: widget.property.pricePerNight,
+                                  hotelImage: widget.property.imageUrl,
+                                  property: widget.property,
+                                ),
                               ),
                             );
                           },

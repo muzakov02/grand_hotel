@@ -23,7 +23,7 @@ class SuccessDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.check_circle,
-                color: Colors.green, size: 68), // ✅ icon
+                color: Colors.green, size: 68),
             const SizedBox(height: 16),
             Text(
               title,

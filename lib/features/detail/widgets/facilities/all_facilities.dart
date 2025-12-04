@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../data/facilities_data.dart';
-import '../../../../models/facilities.dart';  // ✅ SVG package
+import '../../../../models/facilities.dart';
 
 class AllFacilitiesScreen extends StatefulWidget {
   final String hotelId;
@@ -88,9 +88,7 @@ class _AllFacilitiesScreenState extends State<AllFacilitiesScreen> {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle
-                    ),
+                        color: Colors.white, shape: BoxShape.circle),
                     child: Center(
                       child: SvgPicture.asset(
                         category.iconPath,
@@ -133,9 +131,7 @@ class _AllFacilitiesScreenState extends State<AllFacilitiesScreen> {
                   // + / - Button
                   Icon(
                     category.isExpanded ? Icons.remove : Icons.add,
-                    color: category.isExpanded
-                        ? Colors.black
-                        : Colors.black,
+                    color: category.isExpanded ? Colors.black : Colors.black,
                     size: 20,
                   ),
                 ],

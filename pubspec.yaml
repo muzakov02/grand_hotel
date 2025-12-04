@@ -48,6 +48,7 @@ dependencies:
   flutter_native_splash: ^2.4.7
   cupertino: ^0.0.1
   yandex_mapkit: ^4.2.1
+  share_plus: ^12.0.1
 
 dev_dependencies:
   flutter_test:

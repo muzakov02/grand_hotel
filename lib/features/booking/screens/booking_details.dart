@@ -74,7 +74,6 @@ class _BookingDetailsState extends State<BookingDetails> {
                             widget.booking.property.imageUrl,
                             width: 78,
                             height: 78,
-                            // Butun balandlik
                             fit: BoxFit.cover,
                           ),
                         ),

@@ -5,7 +5,6 @@ import 'package:grand_hotel/core/config/theme/app_colors.dart';
 import 'package:grand_hotel/features/auth/sign_in/sign_in_screen.dart';
 import 'package:grand_hotel/features/auth/views/screens/success_dialog.dart';
 import 'package:grand_hotel/features/auth/views/widgets/custom_text_field.dart';
-import 'package:grand_hotel/main_screen.dart';
 
 class NewPasswordScreen extends StatefulWidget {
   const NewPasswordScreen({super.key});
@@ -126,13 +125,13 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   if (isValid) {
                     showDialog(
                       context: context,
-                      barrierDismissible: false, // tashqarisini bosib yopilmaydi
+                      barrierDismissible: false,
                       builder: (context) {
                         return SuccessDialog(
                           title: "Success",
                           message: "Your password is successfully created",
                           onContinue: () {
-                            Navigator.pop(context); // dialogni yopish
+                            Navigator.pop(context);
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(builder: (context) => const SignInScreen()),

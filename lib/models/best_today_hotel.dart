@@ -1,6 +1,3 @@
-
-
-
 class BestTodayHotel {
   final String id;
   final String name;
@@ -12,6 +9,9 @@ class BestTodayHotel {
   final double originalPrice;
   final int discountPercent;
   final bool isFeatured;
+  final String description;
+  final double? latitude;
+  final double? longitude;
 
   BestTodayHotel({
     required this.id,
@@ -24,6 +24,9 @@ class BestTodayHotel {
     required this.originalPrice,
     required this.discountPercent,
     this.isFeatured = false,
+    this.description = '',
+    this.latitude,
+    this.longitude,
   });
 
   factory BestTodayHotel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +41,8 @@ class BestTodayHotel {
       originalPrice: (json['originalPrice'] ?? 0.0).toDouble(),
       discountPercent: json['discountPercent'] ?? 0,
       isFeatured: json['isFeatured'] ?? false,
+      latitude: json['latitude']?.toDouble(),
+      longitude: json['longitude']?.toDouble(),
     );
   }
 
@@ -53,6 +58,8 @@ class BestTodayHotel {
       'originalPrice': originalPrice,
       'discountPercent': discountPercent,
       'isFeatured': isFeatured,
+      'latitude': latitude,
+      'longitude': longitude,
     };
   }
 }

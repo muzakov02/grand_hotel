@@ -1,4 +1,3 @@
-// widgets/recommended_section.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grand_hotel/bloc/recommended/recommended_bloc.dart';
@@ -9,8 +8,6 @@ import 'package:grand_hotel/features/home/widgets/recomended/property_type_filte
 
 import '../../../../core/common/utils/navigation_helper.dart';
 
-
-
 class RecommendedSection extends StatelessWidget {
   const RecommendedSection({super.key});
 
@@ -19,7 +16,6 @@ class RecommendedSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Header
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -31,9 +27,7 @@ class RecommendedSection extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () {
-                // Navigator.push(...)
-              },
+              onPressed: () {},
               child: const Text(
                 'See All',
                 style: TextStyle(
@@ -71,8 +65,8 @@ class RecommendedSection extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         context.read<RecommendedBloc>().add(
-                          RefreshRecommendedProperties(),
-                        );
+                              RefreshRecommendedProperties(),
+                            );
                       },
                       child: const Text('Retry'),
                     ),

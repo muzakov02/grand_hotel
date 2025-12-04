@@ -61,7 +61,7 @@ class _OtpScreenState extends State<OtpScreen> {
     }
   }
 
-  // Agar foydalanuvchi birinchi katakka 4 ta raqam yopishtirib qo'ysa, ularni kataklarga taqsimlaymiz
+
   void _handlePaste(String pasted) {
     final onlyDigits = pasted.replaceAll(RegExp(r'\D'), '');
     if (onlyDigits.length >= 4) {
@@ -101,28 +101,24 @@ class _OtpScreenState extends State<OtpScreen> {
           ],
           onChanged: (value) {
             if (value.length > 1) {
-              // paste holatida bir nechta belgilar kirsa - taqsimlashga urinish
+
               _handlePaste(value);
               return;
             }
             if (value.isNotEmpty) {
-              // agar kiritilgan bo'lsa keyingi fokusga o'tamiz
               if (nextFocus != null) {
                 FocusScope.of(context).requestFocus(nextFocus);
               } else {
                 focusNode.unfocus();
               }
             } else {
-              // agar hozirgi katak bo'shashsa (backspace), oldingi katakka o'tish
               if (prevFocus != null) {
                 FocusScope.of(context).requestFocus(prevFocus);
-                // va ehtimol oldingi katakni tozalashni ham xohlaysiz
                 // prevController?.clear();
               }
             }
             _checkCodeComplete();
           },
-          // paste va boshqa clipboard hodisalarini tutish uchun:
           onSubmitted: (_) => _checkCodeComplete(),
           decoration: const InputDecoration(
             border: InputBorder.none,
@@ -139,7 +135,6 @@ class _OtpScreenState extends State<OtpScreen> {
         _pin2Controller.text +
         _pin3Controller.text +
         _pin4Controller.text;
-    // bu yerda network request yoki navgiatsiya qilasiz
     debugPrint('Submitted OTP: $code');
   }
 
@@ -231,13 +226,12 @@ class _OtpScreenState extends State<OtpScreen> {
                 child: ElevatedButton(
                   onPressed: _isButtonEnabled
                       ? () {
-                    _submitCode(); // Avval kodni tekshirasiz
+                    _submitCode();
 
-                    // Keyin boshqa sahifaga yo'naltirish
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const NewPasswordScreen(), // o'z sahifangizni yozing
+                        builder: (context) => const NewPasswordScreen(),
                       ),
                     );
                   }
@@ -271,21 +265,17 @@ class _OtpScreenState extends State<OtpScreen> {
                       style: TextStyle(fontSize: 15, color: Colors.grey)),
                   TextButton(
                     onPressed: () {
-                      // Barcha kataklarni tozalash
                       _pin1Controller.clear();
                       _pin2Controller.clear();
                       _pin3Controller.clear();
                       _pin4Controller.clear();
 
-                      // Fokusni birinchi katakka qaytarish
                       FocusScope.of(context).requestFocus(_pin1Focus);
 
-                      // Button disable bo‘lishi uchun holatni yangilash
                       setState(() {
                         _isButtonEnabled = false;
                       });
 
-                      // Bu yerda resend API chaqirishingiz ham mumkin
                       debugPrint("Resend OTP to ${widget.email}");
                     },
                     child: Text(

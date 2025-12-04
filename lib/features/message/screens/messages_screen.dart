@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grand_hotel/features/home/screens/home_screen.dart';
 import 'package:grand_hotel/main_screen.dart';
+
 import '../../../bloc/message/message_bloc.dart';
 import '../../../bloc/message/message_event.dart';
 import '../../../bloc/message/message_state.dart';
@@ -33,7 +33,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
         elevation: 0,
         leading: IconButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>MainScreen()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MainScreen()));
           },
           icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
@@ -47,9 +48,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              // Filter or settings
-            },
+            onPressed: () {},
             icon: const Icon(Icons.filter_list, color: Colors.black),
           ),
         ],
@@ -119,7 +118,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
           if (state is MessageLoaded) {
             return Column(
               children: [
-                // ✅ Search TextField body ichida
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: TextField(
@@ -130,12 +128,12 @@ class _MessagesScreenState extends State<MessagesScreen> {
                       prefixIcon: Icon(Icons.search, color: Colors.grey[400]),
                       suffixIcon: _searchController.text.isNotEmpty
                           ? IconButton(
-                        icon: const Icon(Icons.clear, color: Colors.grey),
-                        onPressed: () {
-                          _searchController.clear();
-                          context.read<MessageBloc>().add(ClearSearch());
-                        },
-                      )
+                              icon: const Icon(Icons.clear, color: Colors.grey),
+                              onPressed: () {
+                                _searchController.clear();
+                                context.read<MessageBloc>().add(ClearSearch());
+                              },
+                            )
                           : null,
                       filled: true,
                       fillColor: Colors.grey[100],
@@ -163,48 +161,48 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 Expanded(
                   child: state.messages.isEmpty
                       ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.chat_bubble_outline,
-                          size: 64,
-                          color: Colors.grey[400],
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          state.isSearching
-                              ? 'No messages found'
-                              : 'No messages yet',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[600],
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.chat_bubble_outline,
+                                size: 64,
+                                color: Colors.grey[400],
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                state.isSearching
+                                    ? 'No messages found'
+                                    : 'No messages yet',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : RefreshIndicator(
+                          onRefresh: () async {
+                            context.read<MessageBloc>().add(RefreshMessages());
+                            await Future.delayed(const Duration(seconds: 1));
+                          },
+                          color: const Color(0xFF2853AF),
+                          child: ListView.separated(
+                            padding: const EdgeInsets.only(bottom: 80),
+                            itemCount: state.messages.length,
+                            separatorBuilder: (context, index) => Divider(
+                              height: 1,
+                              thickness: 0.5,
+                              color: Colors.grey.shade300,
+                              indent: 80,
+                            ),
+                            itemBuilder: (context, index) {
+                              final message = state.messages[index];
+                              return _buildMessageTile(context, message);
+                            },
                           ),
                         ),
-                      ],
-                    ),
-                  )
-                      : RefreshIndicator(
-                    onRefresh: () async {
-                      context.read<MessageBloc>().add(RefreshMessages());
-                      await Future.delayed(const Duration(seconds: 1));
-                    },
-                    color: const Color(0xFF2853AF),
-                    child: ListView.separated(
-                      padding: const EdgeInsets.only(bottom: 80),
-                      itemCount: state.messages.length,
-                      separatorBuilder: (context, index) => Divider(
-                        height: 1,
-                        thickness: 0.5,
-                        color: Colors.grey.shade300,
-                        indent: 80,
-                      ),
-                      itemBuilder: (context, index) {
-                        final message = state.messages[index];
-                        return _buildMessageTile(context, message);
-                      },
-                    ),
-                  ),
                 ),
               ],
             );
@@ -238,8 +236,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
           builder: (BuildContext dialogContext) {
             return AlertDialog(
               title: const Text('Delete Message'),
-              content: const Text(
-                  'Are you sure you want to delete this message?'),
+              content:
+                  const Text('Are you sure you want to delete this message?'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(dialogContext).pop(false),
@@ -266,7 +264,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
             context.read<MessageBloc>().add(MarkMessageAsRead(message.id));
           }
 
-          // ✅ Chat screen'ga o'tish
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -279,7 +276,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Row(
             children: [
-              // Avatar with online indicator
               Stack(
                 children: [
                   CircleAvatar(
@@ -289,12 +285,12 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     onBackgroundImageError: (_, __) {},
                     child: message.imageUrl.isEmpty
                         ? Text(
-                      message.name[0].toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
+                            message.name[0].toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
                         : null,
                   ),
                   if (message.isOnline)
@@ -313,10 +309,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     ),
                 ],
               ),
-
               const SizedBox(width: 12),
-
-              // Name and message
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -326,7 +319,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: message.unreadCount != null &&
-                            message.unreadCount! > 0
+                                message.unreadCount! > 0
                             ? FontWeight.bold
                             : FontWeight.w600,
                         color: Colors.black,
@@ -340,11 +333,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
                       style: TextStyle(
                         fontSize: 14,
                         color: message.unreadCount != null &&
-                            message.unreadCount! > 0
+                                message.unreadCount! > 0
                             ? Colors.black87
                             : Colors.grey[600],
                         fontWeight: message.unreadCount != null &&
-                            message.unreadCount! > 0
+                                message.unreadCount! > 0
                             ? FontWeight.w500
                             : FontWeight.normal,
                       ),
@@ -354,10 +347,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   ],
                 ),
               ),
-
               const SizedBox(width: 8),
-
-              // Time and unread badge
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -367,11 +357,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     style: TextStyle(
                       fontSize: 12,
                       color: message.unreadCount != null &&
-                          message.unreadCount! > 0
+                              message.unreadCount! > 0
                           ? const Color(0xFF2853AF)
                           : Colors.grey[500],
                       fontWeight: message.unreadCount != null &&
-                          message.unreadCount! > 0
+                              message.unreadCount! > 0
                           ? FontWeight.w600
                           : FontWeight.normal,
                     ),
@@ -389,7 +379,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                         shape: BoxShape.circle,
                       ),
                       constraints:
-                      const BoxConstraints(minWidth: 20, minHeight: 20),
+                          const BoxConstraints(minWidth: 20, minHeight: 20),
                       child: Center(
                         child: Text(
                           '${message.unreadCount}',
@@ -465,7 +455,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                // Keyboard yopish
                 FocusScope.of(dialogContext).unfocus();
                 Future.delayed(const Duration(milliseconds: 100), () {
                   Navigator.pop(dialogContext);
@@ -492,16 +481,15 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   return;
                 }
 
-                // Keyboard yopish
                 FocusScope.of(dialogContext).unfocus();
 
                 blocContext.read<MessageBloc>().add(
-                  AddMessage(
-                    name: name,
-                    description: message,
-                    imageUrl: 'https://i.pravatar.cc/150?img=7',
-                  ),
-                );
+                      AddMessage(
+                        name: name,
+                        description: message,
+                        imageUrl: 'https://i.pravatar.cc/150?img=7',
+                      ),
+                    );
 
                 Future.delayed(const Duration(milliseconds: 100), () {
                   Navigator.pop(dialogContext);
@@ -524,7 +512,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
         );
       },
     ).then((_) {
-      // Dialog to'liq yopilgandan keyin dispose
       Future.delayed(const Duration(milliseconds: 200), () {
         nameController.dispose();
         messageController.dispose();

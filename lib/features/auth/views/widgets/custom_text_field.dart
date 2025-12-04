@@ -5,7 +5,6 @@ import 'package:grand_hotel/core/config/theme/app_colors.dart';
 class CustomTextField extends StatefulWidget {
   final String label;
   final String hintText;
-  // final IconData prefixIcon;
   final bool isPassword;
   final TextEditingController controller;
   final String? errorText;
@@ -19,7 +18,6 @@ class CustomTextField extends StatefulWidget {
     super.key,
     required this.label,
     required this.hintText,
-    // required this.prefixIcon,
     this.isPassword = false,
     required this.controller,
     this.errorText,

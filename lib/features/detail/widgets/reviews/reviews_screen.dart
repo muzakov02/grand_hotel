@@ -109,7 +109,6 @@ class ReviewsScreen extends StatelessWidget {
 
             return Column(
               children: [
-                // Rating Summary (rasmda 4.4 ko'rsatilgan qism)
                 _buildRatingSummary(reviews),
 
                 const SizedBox(height: 16),
@@ -131,7 +130,6 @@ class ReviewsScreen extends StatelessWidget {
 
                 const SizedBox(height: 12),
 
-                // ✅ BARCHA REVIEWLAR
                 Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -158,12 +156,10 @@ class ReviewsScreen extends StatelessWidget {
 
   // Rating Summary Widget (4.4 va rating bars)
   Widget _buildRatingSummary(List<Review> reviews) {
-    // O'rtacha rating hisoblash
     final avgRating = reviews.isEmpty
         ? 0.0
         : reviews.map((r) => r.rating).reduce((a, b) => a + b) / reviews.length;
 
-    // Har bir rating uchun count
     final rating5 = reviews.where((r) => r.rating == 5.0).length;
     final rating4 = reviews.where((r) => r.rating >= 4.0 && r.rating < 5.0).length;
     final rating3 = reviews.where((r) => r.rating >= 3.0 && r.rating < 4.0).length;
@@ -175,7 +171,6 @@ class ReviewsScreen extends StatelessWidget {
       color: Colors.grey.shade50,
       child: Row(
         children: [
-          // Left side - Average rating
           Expanded(
             flex: 2,
             child: Column(

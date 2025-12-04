@@ -11,6 +11,8 @@ class FullHotel {
   final String description;
   final String bed;
   final String bath;
+  final double? latitude;   // ✅ Qo'shildi
+  final double? longitude;  // ✅ Qo'shildi
 
   FullHotel({
     required this.id,
@@ -25,6 +27,8 @@ class FullHotel {
     this.description = '',
     required this.bed,
     required this.bath,
+    this.latitude,
+    this.longitude,
   });
 
   FullHotel copyWith({
@@ -40,6 +44,8 @@ class FullHotel {
     String? description,
     String? bed,
     String? bath,
+    double? latitude,
+    double? longitude,
   }) {
     return FullHotel(
       id: id ?? this.id,
@@ -54,6 +60,48 @@ class FullHotel {
       description: description ?? this.description,
       bed: bed ?? this.bed,
       bath: bath ?? this.bath,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
     );
+  }
+
+  factory FullHotel.fromJson(Map<String, dynamic> json) {
+    return FullHotel(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      location: json['location'] ?? '',
+      pricePerNight: (json['pricePerNight'] ?? 0).toDouble(),
+      rating: (json['rating'] ?? 0).toDouble(),
+      imageUrl: json['imageUrl'] ?? '',
+      isFavorite: json['isFavorite'] ?? false,
+      isPopular: json['isPopular'] ?? false,
+      amenities: json['amenities'] != null
+          ? List<String>.from(json['amenities'])
+          : [],
+      description: json['description'] ?? '',
+      bed: json['bed'] ?? '',
+      bath: json['bath'] ?? '',
+      latitude: json['latitude']?.toDouble(),
+      longitude: json['longitude']?.toDouble(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'location': location,
+      'pricePerNight': pricePerNight,
+      'rating': rating,
+      'imageUrl': imageUrl,
+      'isFavorite': isFavorite,
+      'isPopular': isPopular,
+      'amenities': amenities,
+      'description': description,
+      'bed': bed,
+      'bath': bath,
+      'latitude': latitude,
+      'longitude': longitude,
+    };
   }
 }

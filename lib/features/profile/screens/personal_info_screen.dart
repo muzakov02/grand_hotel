@@ -34,13 +34,11 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   @override
   void initState() {
     super.initState();
-    // Initial qiymatlarni o'rnatish
     firstNameController.text = widget.initialFirstName ?? '';
     lastNameController.text = widget.initialLastName ?? '';
     emailController.text = widget.initialEmail ?? '';
     phoneController.text = widget.initialPhone ?? '';
 
-    // TextField o'zgarishlarini kuzatish
     firstNameController.addListener(_validateForm);
     lastNameController.addListener(_validateForm);
     emailController.addListener(_validateForm);
@@ -64,7 +62,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
   void _saveChanges() {
     if (_isFormValid()) {
-      // Ma'lumotlarni qaytarish
       Navigator.pop(context, {
         'firstName': firstNameController.text.trim(),
         'lastName': lastNameController.text.trim(),
@@ -174,16 +171,16 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 ),
                 child: isLoading
                     ? const CircularProgressIndicator(
-                  color: Colors.white,
-                )
+                        color: Colors.white,
+                      )
                     : Text(
-                  'Save Changes',
-                  style: TextStyle(
-                    color: isFormValid ? Colors.white : Colors.grey,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                        'Save Changes',
+                        style: TextStyle(
+                          color: isFormValid ? Colors.white : Colors.grey,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
               ),
             ],
           ),

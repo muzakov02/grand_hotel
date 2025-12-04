@@ -1,5 +1,4 @@
-// notification_model.dart
-class NotificationModel {  // Notification o'rniga NotificationModel
+class NotificationModel {
   final String id;
   final String title;
   final String imageUrl;

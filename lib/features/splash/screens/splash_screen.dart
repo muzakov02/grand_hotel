@@ -143,7 +143,8 @@ class _SplashScreenState extends State<SplashScreen>
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.white.withOpacity(0.3),
+                                      color:
+                                          Colors.white.withValues(alpha: 0.3),
                                       blurRadius: 30,
                                       spreadRadius: 5,
                                     ),
@@ -155,7 +156,8 @@ class _SplashScreenState extends State<SplashScreen>
                                     fit: BoxFit.cover,
                                     errorBuilder: (context, error, stackTrace) {
                                       return Container(
-                                        color: Colors.white.withOpacity(0.2),
+                                        color:
+                                            Colors.white.withValues(alpha: 0.2),
                                         child: const Icon(
                                           Icons.hotel,
                                           size: 80,
@@ -171,7 +173,6 @@ class _SplashScreenState extends State<SplashScreen>
 
                           const SizedBox(height: 40),
 
-                          // App name
                           const Text(
                             'Grand Hotel',
                             style: TextStyle(
@@ -191,7 +192,6 @@ class _SplashScreenState extends State<SplashScreen>
 
                           const SizedBox(height: 16),
 
-                          // Subtitle
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 40),
                             child: Text(
@@ -199,7 +199,7 @@ class _SplashScreenState extends State<SplashScreen>
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 15,
-                                color: Colors.white.withOpacity(0.9),
+                                color: Colors.white.withValues(alpha: 0.9),
                                 letterSpacing: 0.5,
                                 height: 1.5,
                               ),
@@ -208,14 +208,13 @@ class _SplashScreenState extends State<SplashScreen>
 
                           const SizedBox(height: 60),
 
-                          // Loading indicator
                           SizedBox(
                             width: 40,
                             height: 40,
                             child: CircularProgressIndicator(
                               strokeWidth: 3,
                               valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white.withOpacity(0.7),
+                                Colors.white.withValues(alpha: 0.7),
                               ),
                             ),
                           ),
@@ -224,7 +223,6 @@ class _SplashScreenState extends State<SplashScreen>
                     ),
                   ),
 
-                  // Version at bottom
                   Positioned(
                     bottom: 30,
                     left: 0,
@@ -236,7 +234,7 @@ class _SplashScreenState extends State<SplashScreen>
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.white.withOpacity(0.6),
+                          color: Colors.white.withValues(alpha: 0.6),
                         ),
                       ),
                     ),

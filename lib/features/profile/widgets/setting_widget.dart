@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:grand_hotel/features/home/screens/notification_icon_screen.dart';
 import 'package:grand_hotel/features/profile/screens/help_support_screen.dart';
 import 'package:grand_hotel/features/profile/screens/language_screen.dart';
 import 'package:grand_hotel/features/profile/screens/security_screen.dart';

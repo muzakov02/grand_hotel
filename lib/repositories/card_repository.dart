@@ -2,17 +2,17 @@ import '../models/payment_card.dart';
 
 abstract class CardRepository {
   Future<List<PaymentCard>> getCards();
+
   Future<void> addCard(PaymentCard card);
+
   Future<void> deleteCard(String cardId);
+
   Future<void> setDefaultCard(String cardId);
 }
 
 class CardRepositoryImpl implements CardRepository {
-  // API yoki local database bilan ishlash
-
   @override
   Future<List<PaymentCard>> getCards() async {
-    // Simulate API call
     await Future.delayed(const Duration(seconds: 1));
 
     return [
@@ -44,18 +44,15 @@ class CardRepositoryImpl implements CardRepository {
   @override
   Future<void> addCard(PaymentCard card) async {
     await Future.delayed(const Duration(milliseconds: 500));
-    // API ga POST request
   }
 
   @override
   Future<void> deleteCard(String cardId) async {
     await Future.delayed(const Duration(milliseconds: 500));
-    // API ga DELETE request
   }
 
   @override
   Future<void> setDefaultCard(String cardId) async {
     await Future.delayed(const Duration(milliseconds: 500));
-    // API ga PUT request
   }
 }

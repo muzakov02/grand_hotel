@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
@@ -9,7 +8,12 @@ class NearbyHotelsMap extends StatefulWidget {
   final double userLatitude;
   final double userLongitude;
 
-  const NearbyHotelsMap({super.key, required this.hotels, required this.userLatitude, required this.userLongitude});
+  const NearbyHotelsMap({
+    super.key,
+    required this.hotels,
+    required this.userLatitude,
+    required this.userLongitude,
+  });
 
   @override
   State<NearbyHotelsMap> createState() => _NearbyHotelsMapState();
@@ -26,15 +30,38 @@ class _NearbyHotelsMapState extends State<NearbyHotelsMap> {
   }
 
   void _createPlacemarks() {
+    _mapObjects.clear();
+
+    _mapObjects.add(
+      PlacemarkMapObject(
+        mapId: const MapObjectId('user_location'),
+        point: Point(
+          latitude: widget.userLatitude,
+          longitude: widget.userLongitude,
+        ),
+        opacity: 1,
+        icon: PlacemarkIcon.single(
+          PlacemarkIconStyle(
+            image: BitmapDescriptor.fromAssetImage('assets/user_marker.png'),
+            scale: 0.2,
+          ),
+        ),
+      ),
+    );
+
     for (var hotel in widget.hotels) {
       _mapObjects.add(
         PlacemarkMapObject(
-          mapId: MapObjectId(hotel.id),
-          point: Point(latitude: hotel.coordinates.latitude, longitude: hotel.coordinates.longitude),
+          mapId: MapObjectId('hotel_${hotel.id}'),
+          point: Point(
+            latitude: hotel.coordinates.latitude,
+            longitude: hotel.coordinates.longitude,
+          ),
           opacity: 1,
           icon: PlacemarkIcon.single(
             PlacemarkIconStyle(
-              image: BitmapDescriptor.fromAssetImage('assets/hotel_marker.png'),
+              image: BitmapDescriptor.fromAssetImage(
+                  'assets/images/hotel_marker.png'),
               scale: 0.15,
             ),
           ),
@@ -47,15 +74,53 @@ class _NearbyHotelsMapState extends State<NearbyHotelsMap> {
   void _showHotelInfo(NearbyHotel hotel) {
     showModalBottomSheet(
       context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
       builder: (context) => Container(
         padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(hotel.name, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(
+              hotel.name,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 8),
-            Text('\$${hotel.price}/night • ${hotel.distance}km'),
+            Row(
+              children: [
+                const Icon(Icons.star, color: Colors.amber, size: 16),
+                const SizedBox(width: 4),
+                Text(
+                  hotel.rating.toString(),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(width: 16),
+                Text(
+                  '\$${hotel.price}/night',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF2853AF),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                const Icon(Icons.location_on, size: 16, color: Colors.grey),
+                const SizedBox(width: 4),
+                Text(
+                  '${hotel.distance.toStringAsFixed(1)} km away',
+                  style: const TextStyle(color: Colors.grey),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -65,20 +130,31 @@ class _NearbyHotelsMapState extends State<NearbyHotelsMap> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      height: 180,
+      height: 150,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 8, offset: const Offset(0, 2))],
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         child: YandexMap(
           onMapCreated: (controller) {
             _mapController = controller;
             _mapController.moveCamera(
               CameraUpdate.newCameraPosition(
-                CameraPosition(target: Point(latitude: widget.userLatitude, longitude: widget.userLongitude), zoom: 12.0),
+                CameraPosition(
+                  target: Point(
+                    latitude: widget.userLatitude,
+                    longitude: widget.userLongitude,
+                  ),
+                  zoom: 12.0,
+                ),
               ),
             );
           },

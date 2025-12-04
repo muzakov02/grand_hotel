@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grand_hotel/models/full_hotel.dart'; // 👈 O'zgardi
+import 'package:grand_hotel/models/full_hotel.dart';
 
 import '../../../../bloc/most_popular/most_popular_bloc.dart';
 import '../../../../bloc/most_popular/most_popular_event.dart';
 
 class HotelCard extends StatelessWidget {
-  final FullHotel hotel; // 👈 Hotel → FullHotel
+  final FullHotel hotel;
   final VoidCallback onTap;
 
   const HotelCard({
@@ -35,7 +35,6 @@ class HotelCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           child: Stack(
             children: [
-              // Background Image
               Positioned.fill(
                 child: Image.network(
                   hotel.imageUrl,
@@ -49,7 +48,6 @@ class HotelCard extends StatelessWidget {
                 ),
               ),
 
-              // Gradient Overlay
               Positioned.fill(
                 child: DecoratedBox(
                   decoration: BoxDecoration(
@@ -72,8 +70,8 @@ class HotelCard extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     context.read<MostPopularBloc>().add(
-                      ToggleFavorite(hotel.id),
-                    );
+                          ToggleFavorite(hotel.id),
+                        );
                   },
                   child: Container(
                     padding: const EdgeInsets.all(6),
@@ -96,7 +94,6 @@ class HotelCard extends StatelessWidget {
                 ),
               ),
 
-              // Hotel Info
               Positioned(
                 left: 12,
                 right: 12,
@@ -150,8 +147,7 @@ class HotelCard extends StatelessWidget {
                               style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.white
-                              ),
+                                  color: Colors.white),
                             ),
                           ],
                         ),

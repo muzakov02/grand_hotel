@@ -23,41 +23,33 @@ class SecurityScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: RawScrollbar(
-          // Custom scrollbar uchun
-          thumbColor: const Color(0xFF2853AF), // Ko'k rang
-          thickness: 8.0, // Qalinroq
+          thumbColor: const Color(0xFF2853AF),
+          thickness: 8.0,
           radius: const Radius.circular(10),
-          thumbVisibility: true, // Har doim ko'rinadi
+          thumbVisibility: true,
           trackVisibility: false,
-          trackColor: Colors.grey.shade200, // Track rangi (agar kerak bo'lsa)
+          trackColor: Colors.grey.shade200,
           trackBorderColor: Colors.transparent,
           child: SingleChildScrollView(
-            padding: const EdgeInsets.only(right: 12), // Scrollbar uchun joy
+            padding: const EdgeInsets.only(right: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Terms bo'limi
                 _buildSection(
                   title: 'Terms',
                   content: _getLoremIpsum(),
                 ),
                 const SizedBox(height: 24),
-
-                // Changes to the Service bo'limi
                 _buildSection(
                   title: 'Changes to the Service and/or Terms:',
                   content: _getLoremIpsum(),
                 ),
                 const SizedBox(height: 24),
-
-                // Privacy Policy
                 _buildSection(
                   title: 'Privacy Policy',
                   content: _getLoremIpsum(),
                 ),
                 const SizedBox(height: 24),
-
-                // Qo'shimcha bo'limlar
                 _buildSection(
                   title: 'User Responsibilities',
                   content: _getLoremIpsum(),
@@ -74,7 +66,6 @@ class SecurityScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        // border: Border.all(color: const Color(0xFF2853AF), width: 2),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(

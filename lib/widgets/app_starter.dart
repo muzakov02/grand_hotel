@@ -19,7 +19,6 @@ class AppStarter extends StatelessWidget {
       builder: (context, appStarterState) {
         return BlocBuilder<AuthBloc, AuthState>(
           builder: (context, authState) {
-            // Initialize app and auth if not done yet
             if (appStarterState is AppStarterInitial) {
               context.read<AppStarterBloc>().add(InitializeApp());
             }
@@ -28,7 +27,6 @@ class AppStarter extends StatelessWidget {
               context.read<AuthBloc>().add(InitializeAuth());
             }
 
-            // Show loading while initializing
             if (appStarterState is AppStarterInitializing ||
                 authState is AuthInitializing) {
               return const Scaffold(
@@ -48,7 +46,6 @@ class AppStarter extends StatelessWidget {
               );
             }
 
-            // Show error if initialization failed
             if (appStarterState is AppStarterError) {
               return Scaffold(
                 body: Center(
@@ -113,12 +110,10 @@ class AppStarter extends StatelessWidget {
               );
             }
 
-            // Both initialized, show splash screen
             if (appStarterState is AppStarterInitialized) {
               return const SplashScreen();
             }
 
-            // Default fallback
             return const Scaffold(
               body: Center(
                 child: CircularProgressIndicator(),

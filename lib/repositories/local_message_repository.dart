@@ -1,24 +1,22 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+
 import '../models/message_model.dart';
 
 class LocalMessageRepository {
   static const String _boxName = 'messages';
   Box<Message>? _messageBox;
 
-  // Initialize Hive
   Future<void> init() async {
     await Hive.initFlutter();
     Hive.registerAdapter(MessageAdapter());
     _messageBox = await Hive.openBox<Message>(_boxName);
 
-    // Agar box bo'sh bo'lsa, demo data qo'shamiz
     if (_messageBox!.isEmpty) {
       await _addDemoData();
     }
   }
 
-  // Demo data (birinchi marta ochilganda)
   Future<void> _addDemoData() async {
     final demoMessages = [
       Message(
@@ -105,27 +103,22 @@ class LocalMessageRepository {
     }
   }
 
-  // Get all messages
   Future<List<Message>> getMessages() async {
     await Future.delayed(const Duration(milliseconds: 300)); // Simulate loading
 
     final messages = _messageBox!.values.toList();
-    // Sort by timestamp (newest first)
     messages.sort((a, b) => b.timestamp.compareTo(a.timestamp));
     return messages;
   }
 
-  // Add new message
   Future<void> addMessage(Message message) async {
     await _messageBox!.put(message.id, message);
   }
 
-  // Update message
   Future<void> updateMessage(Message message) async {
     await _messageBox!.put(message.id, message);
   }
 
-  // Mark as read
   Future<void> markAsRead(String messageId) async {
     final message = _messageBox!.get(messageId);
     if (message != null) {
@@ -134,12 +127,10 @@ class LocalMessageRepository {
     }
   }
 
-  // Delete message
   Future<void> deleteMessage(String messageId) async {
     await _messageBox!.delete(messageId);
   }
 
-  // Search messages
   Future<List<Message>> searchMessages(String query) async {
     final messages = await getMessages();
 
@@ -154,7 +145,6 @@ class LocalMessageRepository {
     }).toList();
   }
 
-  // Get total unread count
   Future<int> getUnreadCount() async {
     final messages = await getMessages();
     return messages
@@ -162,12 +152,10 @@ class LocalMessageRepository {
         .fold<int>(0, (sum, msg) => sum + msg.unreadCount!);
   }
 
-  // Clear all messages (for testing)
   Future<void> clearAllMessages() async {
     await _messageBox!.clear();
   }
 
-  // Close box
   Future<void> close() async {
     await _messageBox?.close();
   }

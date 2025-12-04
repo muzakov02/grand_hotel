@@ -33,13 +33,13 @@ class _NewCardScreenState extends State<NewCardScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      // Karta raqamining oxirgi 4 raqamini olish
+
       final cardNumber = _cardNumberController.text;
       final last4Digits = cardNumber.length >= 4
           ? cardNumber.substring(cardNumber.length - 4)
           : cardNumber;
 
-      // Karta turini aniqlash (birinchi raqamga qarab)
+
       String cardType = 'card';
       String iconPath = 'assets/icons/card.svg';
 
@@ -51,7 +51,7 @@ class _NewCardScreenState extends State<NewCardScreen> {
         iconPath = 'assets/icons/mastercard.svg';
       }
 
-      // Yangi karta yaratish
+
       final newCard = PaymentMethod(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         name: _cardHolderController.text,
@@ -60,7 +60,7 @@ class _NewCardScreenState extends State<NewCardScreen> {
         iconPath: iconPath,
       );
 
-      // Orqaga qaytish va kartani yuborish
+
       Navigator.pop(context, newCard);
     }
   }
@@ -191,10 +191,9 @@ class _NewCardScreenState extends State<NewCardScreen> {
                 ),
                 SizedBox(height: 20),
 
-                // Expired va CVV Code - Row shaklida
+
                 Row(
                   children: [
-                    // Expired maydon
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,8 +250,6 @@ class _NewCardScreenState extends State<NewCardScreen> {
                       ),
                     ),
                     SizedBox(width: 16),
-
-                    // CVV Code maydon
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -338,7 +335,6 @@ class _NewCardScreenState extends State<NewCardScreen> {
   }
 }
 
-// Custom formatter Expired uchun
 class _ExpiryDateFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(

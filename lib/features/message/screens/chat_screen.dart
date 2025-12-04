@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../models/message_model.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -18,7 +19,6 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    // Demo messages
     _chatMessages.addAll([
       ChatMessage(
         text: widget.message.description,
@@ -31,7 +31,8 @@ class _ChatScreenState extends State<ChatScreen> {
         time: '10:30 AM',
       ),
       ChatMessage(
-        text: 'hi for this hotel with a king sweet room are there still any vacancies?',
+        text:
+            'hi for this hotel with a king sweet room are there still any vacancies?',
         isMe: true,
         time: '10:15 AM',
       ),
@@ -93,18 +94,11 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Column(
         children: [
-          // ✅ User info section (AppBar dan keyin)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               color: Colors.white,
-              boxShadow: [
-                // BoxShadow(
-                //   color: Colors.grey.withValues(alpha: 0.1),
-                //   blurRadius: 4,
-                //   offset: const Offset(0, 2),
-                // ),
-              ],
+              boxShadow: [],
             ),
             child: Row(
               children: [
@@ -116,7 +110,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 const SizedBox(width: 12),
 
-                // Name and status
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,7 +137,6 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
 
-                // Video call button
                 IconButton(
                   onPressed: () {},
                   icon: SvgPicture.asset(
@@ -154,7 +146,6 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
 
-                // Audio call button
                 IconButton(
                   onPressed: () {},
                   icon: SvgPicture.asset(
@@ -166,12 +157,8 @@ class _ChatScreenState extends State<ChatScreen> {
               ],
             ),
           ),
-
-          // Hotel card (if needed)
           if (widget.message.description.toLowerCase().contains('hotel'))
             _buildHotelCard(),
-
-          // Chat messages
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(16),
@@ -184,8 +171,6 @@ class _ChatScreenState extends State<ChatScreen> {
               },
             ),
           ),
-
-          // Message input
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Container(
@@ -193,7 +178,6 @@ class _ChatScreenState extends State<ChatScreen> {
               decoration: BoxDecoration(
                 color: Color(0xFFE8F2FF),
                 borderRadius: BorderRadius.circular(32),
-
               ),
               child: Row(
                 children: [
@@ -201,7 +185,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     onPressed: () {
                       // Attach file
                     },
-                    icon:SvgPicture.asset(
+                    icon: SvgPicture.asset(
                       'assets/icons/paperclip.svg',
                       width: 24,
                       height: 24,
@@ -230,7 +214,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                     child: IconButton(
                       onPressed: _sendMessage,
-                      icon: const Icon(Icons.send, color: Colors.white, size: 20),
+                      icon:
+                          const Icon(Icons.send, color: Colors.white, size: 20),
                     ),
                   ),
                 ],
@@ -243,7 +228,6 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  // ✅ Hotel card widget (rasmga mos)
   Widget _buildHotelCard() {
     return Container(
       margin: const EdgeInsets.all(16),
@@ -254,7 +238,7 @@ class _ChatScreenState extends State<ChatScreen> {
         border: Border.all(color: Colors.grey.shade300),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -262,7 +246,6 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       child: Row(
         children: [
-          // Hotel image
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.network(
@@ -273,8 +256,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           const SizedBox(width: 12),
-
-          // Hotel info
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -355,7 +336,7 @@ class _ChatScreenState extends State<ChatScreen> {
       padding: const EdgeInsets.only(bottom: 16),
       child: Row(
         mainAxisAlignment:
-        chat.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+            chat.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!chat.isMe) ...[
@@ -369,7 +350,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Flexible(
             child: Column(
               crossAxisAlignment:
-              chat.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                  chat.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -378,7 +359,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   decoration: BoxDecoration(
                     color:
-                    chat.isMe ? const Color(0xFF2853AF) : Colors.grey[200],
+                        chat.isMe ? const Color(0xFF2853AF) : Colors.grey[200],
                     borderRadius: BorderRadius.only(
                       topLeft: const Radius.circular(16),
                       topRight: const Radius.circular(16),
@@ -411,7 +392,6 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 }
 
-// Chat message model
 class ChatMessage {
   final String text;
   final bool isMe;

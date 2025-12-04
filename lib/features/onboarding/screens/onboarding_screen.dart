@@ -51,7 +51,6 @@ class OnboardingScreen extends GetView<OnboardingController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            // Title
             Text(
               item.title,
               textAlign: TextAlign.center,
@@ -62,7 +61,6 @@ class OnboardingScreen extends GetView<OnboardingController> {
             ),
             const SizedBox(height: 14),
 
-            // Description
             Text(
               item.description,
               textAlign: TextAlign.center,

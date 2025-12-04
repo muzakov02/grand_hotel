@@ -1,10 +1,9 @@
-// models/payment_method.dart
 class PaymentMethod {
   final String id;
   final String name;
-  final String type; // 'card', 'visa', 'paypal', etc.
-  final String? cardNumber; // Last 4 digits yoki to'liq raqam
-  final String? iconPath; // Asset path
+  final String type;
+  final String? cardNumber;
+  final String? iconPath;
 
   PaymentMethod({
     required this.id,

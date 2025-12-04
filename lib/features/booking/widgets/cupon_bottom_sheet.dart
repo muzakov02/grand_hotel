@@ -60,7 +60,6 @@ class _CouponBottomSheetState extends State<CouponBottomSheet> {
       // ),
       child: Column(
         children: [
-          // ✅ Bottom Sheet Handle (drag indicator)
           Container(
             margin: EdgeInsets.only(top: 12, bottom: 8),
             width: 40,
@@ -91,10 +90,6 @@ class _CouponBottomSheetState extends State<CouponBottomSheet> {
               ],
             ),
           ),
-
-          // ✅ Chiziq olib tashlandi
-
-          // Coupon List
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.all(16),

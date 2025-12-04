@@ -67,7 +67,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   void _showPaymentBottomSheet() {
-    // Booking ma'lumotlarini yaratish
     final bookingData = Booking(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       property: widget.property,
@@ -77,7 +76,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       roomType: widget.roomType,
       phoneNumber: widget.phoneNumber,
       totalPrice: widget.totalPrice,
-      paymentMethod: '', // Bu keyinchalik to'ldiriladi
+      paymentMethod: '',
       bookingDate: DateTime.now(),
       status: BookingStatus.booked,
     );
@@ -281,7 +280,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
               SizedBox(height: 20),
 
-              // Payment Method Section (Bloc bilan)
               Text(
                 'Payment Method',
                 style: TextStyle(
@@ -322,16 +320,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     color: Colors.grey[100],
                                     borderRadius: BorderRadius.circular(8),
                                   ),
-                                  child: state.selectedPaymentMethod!
-                                      .iconPath !=
-                                      null
-                                      ? SvgPicture.asset(
-                                    state.selectedPaymentMethod!
-                                        .iconPath!,
-                                    fit: BoxFit.contain,
-                                  )
-                                      : Icon(Icons.payment,
-                                      color: Color(0xFF2853AF)),
+                                  child:
+                                      state.selectedPaymentMethod!.iconPath !=
+                                              null
+                                          ? SvgPicture.asset(
+                                              state.selectedPaymentMethod!
+                                                  .iconPath!,
+                                              fit: BoxFit.contain,
+                                            )
+                                          : Icon(Icons.payment,
+                                              color: Color(0xFF2853AF)),
                                 ),
                                 SizedBox(width: 12),
                                 Column(
@@ -346,7 +344,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       ),
                                     ),
                                     if (state.selectedPaymentMethod!
-                                        .cardNumber !=
+                                            .cardNumber !=
                                         null)
                                       Text(
                                         state
@@ -368,7 +366,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     );
                   }
 
-                  // Agar payment method tanlanmagan bo'lsa
                   return InkWell(
                     onTap: _showPaymentBottomSheet,
                     child: Container(
@@ -423,11 +420,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               return ElevatedButton(
                 onPressed: state.selectedPaymentMethod != null
                     ? () {
-
-                  print(
-                      'Processing payment with ${state.selectedPaymentMethod!.name}');
-                  // Navigator.push(...) - Keyingi ekranga o'tish
-                }
+                        print(
+                            'Processing payment with ${state.selectedPaymentMethod!.name}');
+                      }
                     : _showPaymentBottomSheet,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF2853AF),
@@ -479,7 +474,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 }
 
-// ✅ Dashed Line Painter
 class DashedLinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {

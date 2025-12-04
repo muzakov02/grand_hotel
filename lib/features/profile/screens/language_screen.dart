@@ -13,12 +13,7 @@ class LanguageScreen extends StatefulWidget {
 }
 
 class _LanguageScreenState extends State<LanguageScreen> {
-
-  final List<String> suggestedLanguages = [
-    'English',
-    'Русский',
-    'O\'zbek'
-  ];
+  final List<String> suggestedLanguages = ['English', 'Русский', 'O\'zbek'];
 
   final List<String> otherLanguages = [
     'Bahasa Indonesia',
@@ -126,11 +121,11 @@ class _LanguageScreenState extends State<LanguageScreen> {
   }
 
   Widget _buildLanguageOption(
-      String language,
-      bool isLast,
-      String currentLanguage,
-      BuildContext context,
-      ) {
+    String language,
+    bool isLast,
+    String currentLanguage,
+    BuildContext context,
+  ) {
     final bool isSelected = currentLanguage == language;
 
     return InkWell(
@@ -139,13 +134,13 @@ class _LanguageScreenState extends State<LanguageScreen> {
         final languageMap = LanguageBloc.languageMap[language];
         if (languageMap != null) {
           context.read<LanguageBloc>().add(
-            ChangeLanguage(
-              languageMap['code']!,
-              countryCode: languageMap['country']!.isNotEmpty
-                  ? languageMap['country']
-                  : null,
-            ),
-          );
+                ChangeLanguage(
+                  languageMap['code']!,
+                  countryCode: languageMap['country']!.isNotEmpty
+                      ? languageMap['country']
+                      : null,
+                ),
+              );
         }
       },
       child: Padding(
@@ -159,7 +154,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   language,
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                    fontWeight:
+                        isSelected ? FontWeight.w600 : FontWeight.normal,
                   ),
                 ),
                 if (isSelected)

@@ -9,7 +9,6 @@ import 'package:grand_hotel/main_screen.dart';
 import '../../features/onboarding/screens/onboarding_screen.dart';
 
 class AppPages {
-  // Barcha route'larni ro'yxati
   static final routes = [
     // Onboarding
     GetPage(

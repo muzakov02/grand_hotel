@@ -10,7 +10,6 @@ class Hotel {
   final List<String> amenities;
   final String description;
 
-
   Hotel({
     required this.id,
     required this.name,
@@ -22,7 +21,6 @@ class Hotel {
     this.isPopular = false,
     this.amenities = const [],
     this.description = '',
-
   });
 
   Hotel copyWith({
@@ -36,7 +34,6 @@ class Hotel {
     bool? isPopular,
     List<String>? amenities,
     String? description,
-
   }) {
     return Hotel(
       id: id ?? this.id,
@@ -49,7 +46,6 @@ class Hotel {
       isPopular: isPopular ?? this.isPopular,
       amenities: amenities ?? this.amenities,
       description: description ?? this.description,
-
     );
   }
 }

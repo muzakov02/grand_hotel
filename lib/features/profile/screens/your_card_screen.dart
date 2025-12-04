@@ -274,10 +274,10 @@ class YourCardView extends StatelessWidget {
   }
 
   Widget _buildDefaultCheckbox(
-      BuildContext context,
-      PaymentCard card,
-      CardLoaded state,
-      ) {
+    BuildContext context,
+    PaymentCard card,
+    CardLoaded state,
+  ) {
     final isSelected = state.selectedCardId == card.id;
 
     return GestureDetector(
@@ -327,9 +327,10 @@ class YourCardView extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-             Navigator.push(context, MaterialPageRoute(builder: (context) => const NewCardScreen())
-
-              );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NewCardScreen()));
             },
             child: const Text('Add'),
           ),

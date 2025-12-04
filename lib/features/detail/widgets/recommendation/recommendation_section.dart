@@ -29,7 +29,6 @@ class RecommendationSection extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-
                   GestureDetector(
                     onTap: () {
                       // See All page
@@ -53,9 +52,9 @@ class RecommendationSection extends StatelessWidget {
             else if (state is BestTodayLoaded)
               _buildHotelsList(context, state)
             else if (state is BestTodayError)
-                _buildError(state.message)
-              else
-                _buildLoadingList(),
+              _buildError(state.message)
+            else
+              _buildLoadingList(),
           ],
         );
       },
@@ -67,7 +66,6 @@ class RecommendationSection extends StatelessWidget {
       height: 245,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-
         itemCount: 3,
         itemBuilder: (context, index) {
           return Container(
@@ -109,5 +107,3 @@ class RecommendationSection extends StatelessWidget {
     );
   }
 }
-
-// Best Today Card

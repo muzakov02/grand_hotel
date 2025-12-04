@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-
 class Facilities {
   final String id;
   final String name;
-  final String iconPath;  // ✅ SVG path
+  final String iconPath;
   final List<String> facilities;
   bool isExpanded;
 

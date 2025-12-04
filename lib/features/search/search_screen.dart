@@ -1,11 +1,11 @@
 // search_screen.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grand_hotel/features/home/widgets/recomended/property_type_filter.dart';
-import 'package:grand_hotel/features/search/widgets/search_hotels_list.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:grand_hotel/bloc/search_hotel/search_hotels_bloc.dart';
 import 'package:grand_hotel/bloc/search_hotel/search_hotels_event.dart';
+import 'package:grand_hotel/features/home/widgets/recomended/property_type_filter.dart';
+import 'package:grand_hotel/features/search/widgets/search_hotels_list.dart';
 
 import 'filter/filter_bottom_sheet.dart';
 
@@ -19,17 +19,14 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
 
-  // 👇 BU YERGA QO'SHING
   @override
   void initState() {
     super.initState();
-    // Search screen ochilganda filterlarni reset qilish
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<SearchHotelsBloc>().add(ResetSearchFilters());
     });
   }
 
-  // 👇 Bu ham qo'shing (controller tozalash uchun)
   @override
   void dispose() {
     _searchController.dispose();
@@ -68,11 +65,11 @@ class _SearchScreenState extends State<SearchScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: TextField(
-                controller: _searchController, // 👈 Controller qo'shing
+                controller: _searchController,
                 onChanged: (value) {
                   context.read<SearchHotelsBloc>().add(
-                    FilterSearchHotels(searchQuery: value),
-                  );
+                        FilterSearchHotels(searchQuery: value),
+                      );
                 },
                 decoration: InputDecoration(
                   hintText: 'Search',
@@ -139,7 +136,6 @@ class _SearchScreenState extends State<SearchScreen> {
           ],
         ),
       ),
-      // 👇 IXTIYORIY: Tez reset qilish uchun FAB
       floatingActionButton: FloatingActionButton.small(
         backgroundColor: Colors.white,
         onPressed: () {

@@ -1,4 +1,3 @@
-// widgets/filter_bottom_sheet.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grand_hotel/bloc/search_hotel/search_hotels_bloc.dart';
@@ -63,25 +62,20 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   SizedBox(height: 8),
                   _buildGuestSelector(),
                   SizedBox(height: 24),
-
                   _buildSectionTitle('Price'),
                   SizedBox(height: 8),
                   _buildPriceSlider(),
                   SizedBox(height: 24),
-
                   _buildInstantBook(),
                   SizedBox(height: 24),
-
                   _buildSectionTitle('Location'),
                   SizedBox(height: 12),
                   _buildLocationChips(),
                   SizedBox(height: 24),
-
                   _buildSectionTitle('Facilities'),
                   SizedBox(height: 12),
                   _buildFacilitiesList(),
                   SizedBox(height: 24),
-
                   _buildSectionTitle('Ratings'),
                   SizedBox(height: 12),
                   _buildRatingChips(),
@@ -190,11 +184,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     ),
                   ),
                   SizedBox(height: 24),
-
                   _buildGuestCounter(
                     'Adults',
                     adults,
-                        (value) {
+                    (value) {
                       setModalState(() {
                         adults = value;
                       });
@@ -204,11 +197,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     },
                   ),
                   SizedBox(height: 16),
-
                   _buildGuestCounter(
                     'Children',
                     children,
-                        (value) {
+                    (value) {
                       setModalState(() {
                         children = value;
                       });
@@ -218,7 +210,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     },
                   ),
                   SizedBox(height: 24),
-
                   SizedBox(
                     width: double.infinity,
                     height: 48,
@@ -378,7 +369,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
   }
 
   Widget _buildLocationChips() {
-    // “All” olib tashlandi
     final locations = ['San Diego', 'New York', 'Amsterdam'];
     return Wrap(
       spacing: 8,
@@ -471,17 +461,19 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
 
   void _applyFilter() {
     context.read<SearchHotelsBloc>().add(
-      FilterSearchHotels(
-        minPrice: priceRange.start,
-        maxPrice: priceRange.end,
-        minRating: selectedRating?.toDouble(),
-        location: selectedLocation.isNotEmpty ? selectedLocation : null,
-        facilities: selectedFacilities.isNotEmpty ? selectedFacilities.toList() : null,
-        instantBook: instantBook,
-        adults: adults,
-        children: children,
-      ),
-    );
+          FilterSearchHotels(
+            minPrice: priceRange.start,
+            maxPrice: priceRange.end,
+            minRating: selectedRating?.toDouble(),
+            location: selectedLocation.isNotEmpty ? selectedLocation : null,
+            facilities: selectedFacilities.isNotEmpty
+                ? selectedFacilities.toList()
+                : null,
+            instantBook: instantBook,
+            adults: adults,
+            children: children,
+          ),
+        );
     Navigator.pop(context);
   }
 }

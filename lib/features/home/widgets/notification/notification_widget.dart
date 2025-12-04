@@ -1,5 +1,5 @@
-// notification_widget.dart
 import 'package:flutter/material.dart';
+
 import '../../../../models/notification_model.dart';
 
 class NotificationWidget extends StatelessWidget {
@@ -21,14 +21,14 @@ class NotificationWidget extends StatelessWidget {
           height: 40,
         ),
         const SizedBox(width: 12),
-        Expanded( // Bu muhim - kenglikni cheklash uchun
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 notification.title,
-                maxLines: 2, // Faqat 2 qator
-                overflow: TextOverflow.ellipsis, // Qolganini ... bilan ko'rsatish
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,

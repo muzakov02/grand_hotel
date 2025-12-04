@@ -8,7 +8,6 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  // ✅ State o'zgaruvchilari
   bool newEventEnabled = true;
   bool deliveryEnabled = false;
   bool messageEnabled = true;
@@ -40,32 +39,31 @@ class _NotificationScreenState extends State<NotificationScreen> {
               padding: const EdgeInsets.all(12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min, // ✅ Content bo'yicha o'lcham
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: Text(
                       'Messages Notifications',
                       style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey
-                      ),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey),
                     ),
                   ),
                   _buildNotificationOption(
                     'New Event',
                     newEventEnabled,
-                        (value) {
+                    (value) {
                       setState(() {
-                        newEventEnabled = value; // ✅ setState qo'shildi
+                        newEventEnabled = value;
                       });
                     },
                   ),
                   _buildNotificationOption(
                     'Delivery',
                     deliveryEnabled,
-                        (value) {
+                    (value) {
                       setState(() {
                         deliveryEnabled = value;
                       });
@@ -74,7 +72,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   _buildNotificationOption(
                     'Message',
                     messageEnabled,
-                        (value) {
+                    (value) {
                       setState(() {
                         messageEnabled = value;
                       });
@@ -83,12 +81,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   _buildNotificationOption(
                     'Payment',
                     paymentEnabled,
-                        (value) {
+                    (value) {
                       setState(() {
                         paymentEnabled = value;
                       });
                     },
-                    isLast: true, // ✅ Oxirgi element uchun divider yo'q
+                    isLast: true,
                   ),
                 ],
               ),
@@ -100,22 +98,25 @@ class _NotificationScreenState extends State<NotificationScreen> {
   }
 
   Widget _buildNotificationOption(
-      String title,
-      bool value,
-      Function(bool) onChanged, {
-        bool isLast = false,
-      }) {
+    String title,
+    bool value,
+    Function(bool) onChanged, {
+    bool isLast = false,
+  }) {
     return Column(
       children: [
         SwitchListTile(
-          title: Text(title,style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),),
+          title: Text(
+            title,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
           value: value,
           onChanged: onChanged,
-          activeThumbColor: const Color(0xFF2853AF), // ✅ Rangni o'zgartirish
+          activeThumbColor: const Color(0xFF2853AF),
           contentPadding: const EdgeInsets.symmetric(horizontal: 8),
         ),
         if (!isLast)

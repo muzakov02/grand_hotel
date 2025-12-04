@@ -86,7 +86,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             builder: (context) => SignUpScreen(),
                           ),
                         );
-                        // Add your logout logic here
                       },
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -110,7 +109,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(width: 12),
 
-                  // Cancel button
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {

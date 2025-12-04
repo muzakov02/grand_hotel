@@ -21,7 +21,6 @@ class ProfileHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Profile Avatar
         CircleAvatar(
           radius: 24,
           backgroundColor: Colors.grey.shade200,
@@ -29,10 +28,7 @@ class ProfileHeader extends StatelessWidget {
               ? NetworkImage(imageUrl!)
               : const AssetImage('assets/images/profile2.png') as ImageProvider,
         ),
-
         const SizedBox(width: 12),
-
-        // Name va Email
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,29 +36,28 @@ class ProfileHeader extends StatelessWidget {
               Text(
                 name,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               const SizedBox(height: 2),
               Text(
                 email,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w500,
-                ),
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w500,
+                    ),
               ),
             ],
           ),
         ),
         IconButton(
           onPressed: () async {
-            // Ismni bo'lib olish (firstName va lastName)
             final nameParts = name.split(' ');
             final firstName = nameParts.isNotEmpty ? nameParts[0] : '';
-            final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '';
+            final lastName =
+                nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '';
 
-            // PersonalInfoScreen'ga o'tish va natijani kutish
             final result = await Navigator.push<Map<String, String>>(
               context,
               MaterialPageRoute(
@@ -74,7 +69,6 @@ class ProfileHeader extends StatelessWidget {
               ),
             );
 
-            // Agar natija qaytsa, callback funksiyani chaqirish
             if (result != null) {
               onProfileUpdated(result);
             }

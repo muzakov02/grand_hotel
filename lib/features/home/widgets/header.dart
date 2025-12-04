@@ -22,19 +22,15 @@ class Header extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Profile Avatar
           CircleAvatar(
             radius: 24,
             backgroundColor: Colors.grey.shade200,
             backgroundImage: imageUrl != null
                 ? NetworkImage(imageUrl!)
                 : const AssetImage('assets/images/profile.png')
-            as ImageProvider,
+                    as ImageProvider,
           ),
-
           const SizedBox(width: 12),
-
-          // Name va Location
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,14 +38,13 @@ class Header extends StatelessWidget {
                 Text(
                   name,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 const SizedBox(height: 2),
                 Row(
                   children: [
-                    // 🔹 SVG Location icon
                     SvgPicture.asset(
                       'assets/icons/location.svg',
                       width: 16,
@@ -64,8 +59,8 @@ class Header extends StatelessWidget {
                       child: Text(
                         location,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.grey,
-                        ),
+                              color: Colors.grey,
+                            ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -74,14 +69,11 @@ class Header extends StatelessWidget {
               ],
             ),
           ),
-
-          // 🔹 Search va Notification iconlar
           Row(
             children: [
               _buildCircleIcon(
                 icon: Icons.search,
                 onPressed: () {
-                  // Oddiy Navigator.push
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -94,7 +86,6 @@ class Header extends StatelessWidget {
               _buildCircleIcon(
                 icon: Icons.notifications_none,
                 onPressed: () {
-                  // Oddiy Navigator.push
                   Navigator.push(
                     context,
                     MaterialPageRoute(

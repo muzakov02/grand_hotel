@@ -1,4 +1,3 @@
-// widgets/most_popular/most_popular.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grand_hotel/widgets/animated_list_item.dart';
@@ -9,14 +8,13 @@ import '../../../../core/common/utils/navigation_helper.dart';
 import 'hotel_card.dart';
 
 class MostPopular extends StatelessWidget {
-  const MostPopular({super.key}); // ✅ property parametrini olib tashladik
+  const MostPopular({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Header
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -29,7 +27,6 @@ class MostPopular extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                // See All page
               },
               child: const Text(
                 'See All',
@@ -43,7 +40,6 @@ class MostPopular extends StatelessWidget {
         ),
         const SizedBox(height: 12),
 
-        // Hotels List
         SizedBox(
           height: 240,
           child: BlocBuilder<MostPopularBloc, MostPopularState>(
@@ -98,7 +94,6 @@ class MostPopular extends StatelessWidget {
                         child: HotelCard(
                           hotel: hotels[index],
                           onTap: () {
-                            // ✅ NavigationHelper ishlatish
                             NavigationHelper.navigateFromFullHotel(
                               context: context,
                               hotel: hotels[index],
